@@ -1,0 +1,4 @@
+timestamp,alarm_code,severity,message,status
+2026-09-05T11:05:20+08:00,DRY-122,major,Dryer zone 2 temperature deviation above control band,active
+2026-09-05T11:15:40+08:00,QCS-318,warning,Coating thickness approaching upper specification limit,active
+2026-09-05T11:19:10+08:00,DRY-122,major,Dryer zone 2 temperature deviation above control band,recovered

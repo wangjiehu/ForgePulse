@@ -1,0 +1,18 @@
+{
+  "case_id": "coating_line_airflow_002",
+  "golden_expectations": {
+    "expected_primary_root_cause_keywords": ["fan", "airflow", "frequency", "inverter"],
+    "expected_secondary_root_cause_keywords": ["temperature", "dryer", "drift"],
+    "expected_business_risk_keywords": ["non-uniformity", "thickness", "batch", "rejection"],
+    "required_evidence_codes": ["AIR-305", "DRY-122", "QCS-318"],
+    "required_evidence_fields": ["fan_frequency_hz", "dryer_zone_2_temp_c", "thickness_um"],
+    "required_maintenance_records": ["M-2026-057"],
+    "forbidden_claims": [
+      "claims that replace on-site safety responsibility",
+      "claims of automatic equipment control",
+      "claims of verified production deployment"
+    ],
+    "expected_action_types": ["inspect", "quality", "safety"],
+    "expected_root_cause_count_range": [2, 5]
+  }
+}

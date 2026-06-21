@@ -1,0 +1,117 @@
+{
+  "fault_modes": [
+    {
+      "fault_mode_id": "FM-001",
+      "title": "Dryer zone 2 temperature control loop instability",
+      "title_zh": "干燥二区温度控制回路不稳定",
+      "category": "thermal",
+      "typical_symptoms": [
+        "Dryer zone temperature deviation above control band",
+        "Temperature oscillation or sustained drift"
+      ],
+      "related_alarm_codes": ["DRY-122", "DRY-110"],
+      "primary_alarm_codes": ["DRY-122"],
+      "related_sensor_fields": ["dryer_zone_1_temp_c", "dryer_zone_2_temp_c"],
+      "primary_sensor_fields": ["dryer_zone_2_temp_c"],
+      "diagnostic_role": "equipment_cause",
+      "common_causes": [
+        "Aging heater relay",
+        "Temperature sensor calibration drift",
+        "Controller output saturation",
+        "Fan frequency instability"
+      ],
+      "severity": "major",
+      "detection_method": "threshold_violation and sustained_drift on dryer_zone_temp_c fields"
+    },
+    {
+      "fault_mode_id": "FM-002",
+      "title": "Web tension closed-loop response lag",
+      "title_zh": "卷材张力闭环响应滞后",
+      "category": "mechanical",
+      "typical_symptoms": [
+        "Web tension oscillation exceeds warning band",
+        "Tension does not recover after recipe switch"
+      ],
+      "related_alarm_codes": ["TEN-204"],
+      "primary_alarm_codes": ["TEN-204"],
+      "related_sensor_fields": ["web_tension_n"],
+      "primary_sensor_fields": ["web_tension_n"],
+      "diagnostic_role": "coupled_secondary_factor",
+      "common_causes": [
+        "Dancer roller position feedback error",
+        "Tension controller parameter drift",
+        "Roller surface contamination affecting grip"
+      ],
+      "severity": "major",
+      "detection_method": "threshold_violation on web_tension_n"
+    },
+    {
+      "fault_mode_id": "FM-003",
+      "title": "Fan inverter airflow frequency instability",
+      "title_zh": "风机变频与风量频率不稳定",
+      "category": "airflow",
+      "typical_symptoms": [
+        "Fan frequency below normal operating range",
+        "Gradual temperature drift in multiple dryer zones"
+      ],
+      "related_alarm_codes": ["AIR-305"],
+      "primary_alarm_codes": ["AIR-305"],
+      "related_sensor_fields": ["fan_frequency_hz", "dryer_zone_1_temp_c", "dryer_zone_2_temp_c"],
+      "primary_sensor_fields": ["fan_frequency_hz"],
+      "diagnostic_role": "equipment_cause",
+      "common_causes": [
+        "Fan inverter cooling module degradation",
+        "Airflow filter blockage",
+        "Power supply fluctuation",
+        "Inverter capacitor aging"
+      ],
+      "severity": "warning",
+      "detection_method": "threshold_violation and sustained_drift_down on fan_frequency_hz"
+    },
+    {
+      "fault_mode_id": "FM-004",
+      "title": "Drive current resistance from roller surface contamination",
+      "title_zh": "辊面污染导致机械阻力与驱动电流升高",
+      "category": "mechanical",
+      "typical_symptoms": [
+        "Drive current above normal operating range",
+        "Web tension instability",
+        "Uneven coating thickness"
+      ],
+      "related_alarm_codes": ["DRV-410", "TEN-204"],
+      "primary_alarm_codes": ["DRV-410"],
+      "related_sensor_fields": ["drive_current_a", "web_tension_n", "thickness_um"],
+      "primary_sensor_fields": ["drive_current_a"],
+      "diagnostic_role": "equipment_cause",
+      "common_causes": [
+        "Coating material buildup on roller surfaces",
+        "Worn drive roller bearing",
+        "Web path misalignment"
+      ],
+      "severity": "major",
+      "detection_method": "threshold_violation on drive_current_a, correlated with web_tension_n"
+    },
+    {
+      "fault_mode_id": "FM-005",
+      "title": "Coating thickness drift and yield risk",
+      "title_zh": "涂层厚度漂移与良率风险",
+      "category": "quality",
+      "typical_symptoms": [
+        "Inline inspection detected thickness drift",
+        "Thickness values outside specification"
+      ],
+      "related_alarm_codes": ["QCS-318"],
+      "primary_alarm_codes": ["QCS-318"],
+      "related_sensor_fields": ["thickness_um"],
+      "primary_sensor_fields": ["thickness_um"],
+      "diagnostic_role": "quality_effect",
+      "common_causes": [
+        "Downstream effect of temperature instability",
+        "Downstream effect of tension oscillation",
+        "Coating head parameter drift"
+      ],
+      "severity": "warning",
+      "detection_method": "threshold_violation and sustained_drift on thickness_um"
+    }
+  ]
+}

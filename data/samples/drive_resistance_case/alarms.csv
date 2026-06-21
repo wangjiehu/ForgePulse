@@ -1,0 +1,6 @@
+timestamp,alarm_code,severity,message,status
+2026-08-22T09:04:30+08:00,DRV-410,warning,Drive current above normal operating range,active
+2026-08-22T09:08:20+08:00,TEN-204,major,Web tension oscillation exceeds warning band,active
+2026-08-22T09:18:40+08:00,QCS-318,warning,Coating thickness drift detected by inline inspection,active
+2026-08-22T09:24:10+08:00,DRV-410,warning,Drive current above normal operating range,recovered
+2026-08-22T09:26:30+08:00,TEN-204,major,Web tension oscillation exceeds warning band,recovered

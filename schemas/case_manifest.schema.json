@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ForgePulse Case Manifest",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "case_id",
+    "title",
+    "industry",
+    "line",
+    "station",
+    "incident_window",
+    "files"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{2,79}$"
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "industry": { "type": "string", "minLength": 1 },
+    "line": { "type": "string", "minLength": 1 },
+    "station": { "type": "string", "minLength": 1 },
+    "operator_note": { "type": "string" },
+    "incident_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end"],
+      "properties": {
+        "start": { "type": "string", "format": "date-time" },
+        "end": { "type": "string", "format": "date-time" }
+      }
+    },
+    "expected_sensor_fields": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "critical_evidence_fields": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "business_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mttr_baseline_minutes": { "type": "number", "exclusiveMinimum": 0 },
+        "target_mttr_reduction_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "downtime_cost_per_minute": { "type": "number", "minimum": 0 }
+      }
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sensors", "alarms", "sop", "maintenance_records"],
+      "properties": {
+        "sensors": { "type": "string", "minLength": 1 },
+        "alarms": { "type": "string", "minLength": 1 },
+        "sop": { "type": "string", "minLength": 1 },
+        "maintenance_records": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

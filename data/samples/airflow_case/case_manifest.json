@@ -1,0 +1,40 @@
+{
+  "case_id": "coating_line_airflow_002",
+  "title": "Fan frequency drop causes dryer temperature drift and coating non-uniformity",
+  "title_zh": "风机频率下降引发干燥温漂与涂布不均",
+  "industry": "battery manufacturing",
+  "line": "cell coating line B",
+  "station": "dryer section airflow and temperature control",
+  "incident_window": {
+    "start": "2026-07-15T14:00:00+08:00",
+    "end": "2026-07-15T14:30:00+08:00"
+  },
+  "operator_note": "Fan inverter showed intermittent low-frequency output after a power fluctuation. Zone 1 and zone 2 temperatures drifted slowly. Coating thickness appeared uneven at the 14:20 inspection.",
+  "expected_sensor_fields": [
+    "timestamp",
+    "dryer_zone_1_temp_c",
+    "dryer_zone_2_temp_c",
+    "web_tension_n",
+    "line_speed_m_min",
+    "fan_frequency_hz",
+    "drive_current_a",
+    "thickness_um"
+  ],
+  "critical_evidence_fields": ["fan_frequency_hz"],
+  "business_context": {
+    "mttr_baseline_minutes": 60,
+    "target_mttr_reduction_pct": 35,
+    "downtime_cost_per_minute": 120
+  },
+  "files": {
+    "sensors": "sensor_readings.csv",
+    "alarms": "alarms.csv",
+    "sop": "sop_airflow_temperature.md",
+    "maintenance_records": "maintenance_records.md"
+  },
+  "expected_outputs": {
+    "primary_root_cause": "fan inverter cooling module degradation causing frequency instability",
+    "secondary_root_cause": "dryer temperature drift due to insufficient airflow",
+    "business_risk": "coating non-uniformity and potential batch rejection"
+  }
+}

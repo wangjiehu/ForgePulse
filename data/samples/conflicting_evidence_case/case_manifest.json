@@ -1,0 +1,27 @@
+{
+  "case_id": "coating_line_conflicting_evidence_005",
+  "title": "Dryer alarm conflicts with fan frequency evidence",
+  "title_zh": "干燥报警与风机频率证据冲突",
+  "industry": "battery manufacturing",
+  "line": "cell coating line C",
+  "station": "dryer airflow and temperature control",
+  "incident_window": {
+    "start": "2026-09-18T15:00:00+08:00",
+    "end": "2026-09-18T15:24:00+08:00"
+  },
+  "operator_note": "The control system reported a zone 2 temperature alarm, while the recorded zone temperature stayed normal and fan frequency dropped sharply.",
+  "expected_sensor_fields": [
+    "timestamp",
+    "dryer_zone_2_temp_c",
+    "fan_frequency_hz",
+    "line_speed_m_min",
+    "thickness_um"
+  ],
+  "critical_evidence_fields": ["dryer_zone_2_temp_c", "fan_frequency_hz"],
+  "files": {
+    "sensors": "sensor_readings.csv",
+    "alarms": "alarms.csv",
+    "sop": "sop_dryer_airflow_verification.md",
+    "maintenance_records": "maintenance_records.md"
+  }
+}

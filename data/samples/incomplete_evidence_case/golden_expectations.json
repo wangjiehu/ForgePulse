@@ -1,0 +1,16 @@
+{
+  "case_id": "coating_line_incomplete_evidence_004",
+  "golden_expectations": {
+    "expected_status": "insufficient_evidence",
+    "required_evidence_codes": ["DRY-122"],
+    "required_missing_fields": ["dryer_zone_2_temp_c"],
+    "expected_action_types": ["collect_data", "inspect", "safety"],
+    "maximum_primary_confidence": 0.49,
+    "forbidden_claims": [
+      "root cause confirmed",
+      "automatic equipment control",
+      "verified production deployment"
+    ],
+    "expected_root_cause_count_range": [1, 3]
+  }
+}

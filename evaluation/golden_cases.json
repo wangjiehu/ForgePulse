@@ -1,0 +1,31 @@
+{
+  "description": "Human-readable index. Executable expectations are loaded from each case directory.",
+  "source_of_truth": "data/samples/*/golden_expectations.json",
+  "golden_cases": [
+    {
+      "case_id": "coating_line_dryer_tension_001",
+      "expected_status": "confirmed",
+      "focus": "dryer temperature control with tension and quality effects"
+    },
+    {
+      "case_id": "coating_line_airflow_002",
+      "expected_status": "confirmed",
+      "focus": "fan inverter airflow instability"
+    },
+    {
+      "case_id": "coating_line_drive_resistance_003",
+      "expected_status": "confirmed",
+      "focus": "roller contamination and drive resistance"
+    },
+    {
+      "case_id": "coating_line_incomplete_evidence_004",
+      "expected_status": "insufficient_evidence",
+      "focus": "abstention when a critical sensor field is missing"
+    },
+    {
+      "case_id": "coating_line_conflicting_evidence_005",
+      "expected_status": "conflicting_evidence",
+      "focus": "verification request when alarm and sensor evidence conflict"
+    }
+  ]
+}

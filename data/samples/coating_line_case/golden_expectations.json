@@ -1,0 +1,18 @@
+{
+  "case_id": "coating_line_dryer_tension_001",
+  "golden_expectations": {
+    "expected_primary_root_cause_keywords": ["dryer", "zone 2", "temperature", "control loop"],
+    "expected_secondary_root_cause_keywords": ["tension", "closed-loop", "response lag"],
+    "expected_business_risk_keywords": ["thickness", "drift", "yield"],
+    "required_evidence_codes": ["DRY-122", "TEN-204", "QCS-318"],
+    "required_evidence_fields": ["dryer_zone_2_temp_c", "web_tension_n", "thickness_um"],
+    "required_maintenance_records": ["M-2026-041"],
+    "forbidden_claims": [
+      "claims that replace on-site safety responsibility",
+      "claims of automatic equipment control",
+      "claims of verified production deployment"
+    ],
+    "expected_action_types": ["inspect", "quality", "safety"],
+    "expected_root_cause_count_range": [2, 5]
+  }
+}

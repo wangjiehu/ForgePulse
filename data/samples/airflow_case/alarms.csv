@@ -1,0 +1,7 @@
+timestamp,alarm_code,severity,message,status
+2026-07-15T14:04:20+08:00,AIR-305,warning,Fan frequency below normal operating range,active
+2026-07-15T14:10:30+08:00,DRY-122,major,Dryer zone 2 temperature deviation above control band,active
+2026-07-15T14:10:45+08:00,DRY-110,warning,Dryer zone 1 temperature approaching upper control limit,active
+2026-07-15T14:20:10+08:00,QCS-318,warning,Coating thickness drift detected by inline inspection,active
+2026-07-15T14:26:30+08:00,AIR-305,warning,Fan frequency below normal operating range,recovered
+2026-07-15T14:28:15+08:00,DRY-122,major,Dryer zone 2 temperature deviation above control band,recovered

@@ -1,0 +1,398 @@
+{
+  "overall_score": 71,
+  "overall_max": 71,
+  "overall_pct": 100.0,
+  "all_passed": true,
+  "case_results": [
+    {
+      "case_id": "coating_line_airflow_002",
+      "checks": [
+        {
+          "check": "diagnosis_status",
+          "passed": true,
+          "detail": "actual=confirmed, expected=confirmed"
+        },
+        {
+          "check": "top_ranked_primary_root_cause",
+          "passed": true,
+          "detail": "matched 4/4 keywords in fan inverter airflow frequency instability"
+        },
+        {
+          "check": "required_evidence_codes",
+          "passed": true,
+          "detail": "found=['AIR-305', 'DRY-122', 'QCS-318']"
+        },
+        {
+          "check": "required_evidence_fields",
+          "passed": true,
+          "detail": "found=['dryer_zone_2_temp_c', 'fan_frequency_hz', 'thickness_um']"
+        },
+        {
+          "check": "required_maintenance_records",
+          "passed": true,
+          "detail": "required=['M-2026-057']"
+        },
+        {
+          "check": "root_cause_evidence_ids",
+          "passed": true,
+          "detail": "all evidence references must exist"
+        },
+        {
+          "check": "action_candidate_links",
+          "passed": true,
+          "detail": "all action candidate references must exist"
+        },
+        {
+          "check": "evidence_graph_links",
+          "passed": true,
+          "detail": "all evidence graph endpoints must exist"
+        },
+        {
+          "check": "expected_action_types",
+          "passed": true,
+          "detail": "actual=['escalate', 'inspect', 'quality', 'safety']"
+        },
+        {
+          "check": "root_cause_count",
+          "passed": true,
+          "detail": "actual=2, expected=[2, 5]"
+        },
+        {
+          "check": "report_sections",
+          "passed": true,
+          "detail": "required Markdown report sections are present"
+        },
+        {
+          "check": "deterministic_output",
+          "passed": true,
+          "detail": "two runs must produce identical JSON"
+        },
+        {
+          "check": "no_golden_label_dependency",
+          "passed": true,
+          "detail": "removing expected_outputs must not change the diagnosis"
+        },
+        {
+          "check": "counterfactual_alarm_reduces_confidence",
+          "passed": true,
+          "detail": "baseline=0.92, counterfactual=0.62"
+        },
+        {
+          "check": "forbidden_claims",
+          "passed": true,
+          "detail": "violations=[]"
+        }
+      ],
+      "score": 15,
+      "max_score": 15
+    },
+    {
+      "case_id": "coating_line_conflicting_evidence_005",
+      "checks": [
+        {
+          "check": "diagnosis_status",
+          "passed": true,
+          "detail": "actual=conflicting_evidence, expected=conflicting_evidence"
+        },
+        {
+          "check": "required_evidence_codes",
+          "passed": true,
+          "detail": "found=['DRY-122']"
+        },
+        {
+          "check": "required_evidence_fields",
+          "passed": true,
+          "detail": "found=['fan_frequency_hz']"
+        },
+        {
+          "check": "root_cause_evidence_ids",
+          "passed": true,
+          "detail": "all evidence references must exist"
+        },
+        {
+          "check": "action_candidate_links",
+          "passed": true,
+          "detail": "all action candidate references must exist"
+        },
+        {
+          "check": "evidence_graph_links",
+          "passed": true,
+          "detail": "all evidence graph endpoints must exist"
+        },
+        {
+          "check": "expected_action_types",
+          "passed": true,
+          "detail": "actual=['inspect', 'safety', 'verify']"
+        },
+        {
+          "check": "root_cause_count",
+          "passed": true,
+          "detail": "actual=2, expected=[2, 4]"
+        },
+        {
+          "check": "confidence_cap",
+          "passed": true,
+          "detail": "actual=0.59, maximum=0.59"
+        },
+        {
+          "check": "report_sections",
+          "passed": true,
+          "detail": "required Markdown report sections are present"
+        },
+        {
+          "check": "deterministic_output",
+          "passed": true,
+          "detail": "two runs must produce identical JSON"
+        },
+        {
+          "check": "no_golden_label_dependency",
+          "passed": true,
+          "detail": "removing expected_outputs must not change the diagnosis"
+        },
+        {
+          "check": "forbidden_claims",
+          "passed": true,
+          "detail": "violations=[]"
+        }
+      ],
+      "score": 13,
+      "max_score": 13
+    },
+    {
+      "case_id": "coating_line_drive_resistance_003",
+      "checks": [
+        {
+          "check": "diagnosis_status",
+          "passed": true,
+          "detail": "actual=confirmed, expected=confirmed"
+        },
+        {
+          "check": "top_ranked_primary_root_cause",
+          "passed": true,
+          "detail": "matched 5/5 keywords in drive current resistance from roller surface contamination"
+        },
+        {
+          "check": "required_evidence_codes",
+          "passed": true,
+          "detail": "found=['DRV-410', 'QCS-318', 'TEN-204']"
+        },
+        {
+          "check": "required_evidence_fields",
+          "passed": true,
+          "detail": "found=['drive_current_a', 'thickness_um', 'web_tension_n']"
+        },
+        {
+          "check": "required_maintenance_records",
+          "passed": true,
+          "detail": "required=['M-2026-103']"
+        },
+        {
+          "check": "root_cause_evidence_ids",
+          "passed": true,
+          "detail": "all evidence references must exist"
+        },
+        {
+          "check": "action_candidate_links",
+          "passed": true,
+          "detail": "all action candidate references must exist"
+        },
+        {
+          "check": "evidence_graph_links",
+          "passed": true,
+          "detail": "all evidence graph endpoints must exist"
+        },
+        {
+          "check": "expected_action_types",
+          "passed": true,
+          "detail": "actual=['escalate', 'inspect', 'quality', 'safety']"
+        },
+        {
+          "check": "root_cause_count",
+          "passed": true,
+          "detail": "actual=2, expected=[2, 5]"
+        },
+        {
+          "check": "report_sections",
+          "passed": true,
+          "detail": "required Markdown report sections are present"
+        },
+        {
+          "check": "deterministic_output",
+          "passed": true,
+          "detail": "two runs must produce identical JSON"
+        },
+        {
+          "check": "no_golden_label_dependency",
+          "passed": true,
+          "detail": "removing expected_outputs must not change the diagnosis"
+        },
+        {
+          "check": "counterfactual_alarm_reduces_confidence",
+          "passed": true,
+          "detail": "baseline=0.94, counterfactual=0.64"
+        },
+        {
+          "check": "forbidden_claims",
+          "passed": true,
+          "detail": "violations=[]"
+        }
+      ],
+      "score": 15,
+      "max_score": 15
+    },
+    {
+      "case_id": "coating_line_dryer_tension_001",
+      "checks": [
+        {
+          "check": "diagnosis_status",
+          "passed": true,
+          "detail": "actual=confirmed, expected=confirmed"
+        },
+        {
+          "check": "top_ranked_primary_root_cause",
+          "passed": true,
+          "detail": "matched 4/4 keywords in dryer zone 2 temperature control loop instability"
+        },
+        {
+          "check": "required_evidence_codes",
+          "passed": true,
+          "detail": "found=['DRY-122', 'QCS-318', 'TEN-204']"
+        },
+        {
+          "check": "required_evidence_fields",
+          "passed": true,
+          "detail": "found=['dryer_zone_2_temp_c', 'thickness_um', 'web_tension_n']"
+        },
+        {
+          "check": "required_maintenance_records",
+          "passed": true,
+          "detail": "required=['M-2026-041']"
+        },
+        {
+          "check": "root_cause_evidence_ids",
+          "passed": true,
+          "detail": "all evidence references must exist"
+        },
+        {
+          "check": "action_candidate_links",
+          "passed": true,
+          "detail": "all action candidate references must exist"
+        },
+        {
+          "check": "evidence_graph_links",
+          "passed": true,
+          "detail": "all evidence graph endpoints must exist"
+        },
+        {
+          "check": "expected_action_types",
+          "passed": true,
+          "detail": "actual=['escalate', 'inspect', 'quality', 'safety']"
+        },
+        {
+          "check": "root_cause_count",
+          "passed": true,
+          "detail": "actual=2, expected=[2, 5]"
+        },
+        {
+          "check": "report_sections",
+          "passed": true,
+          "detail": "required Markdown report sections are present"
+        },
+        {
+          "check": "deterministic_output",
+          "passed": true,
+          "detail": "two runs must produce identical JSON"
+        },
+        {
+          "check": "no_golden_label_dependency",
+          "passed": true,
+          "detail": "removing expected_outputs must not change the diagnosis"
+        },
+        {
+          "check": "counterfactual_alarm_reduces_confidence",
+          "passed": true,
+          "detail": "baseline=0.91, counterfactual=0.61"
+        },
+        {
+          "check": "forbidden_claims",
+          "passed": true,
+          "detail": "violations=[]"
+        }
+      ],
+      "score": 15,
+      "max_score": 15
+    },
+    {
+      "case_id": "coating_line_incomplete_evidence_004",
+      "checks": [
+        {
+          "check": "diagnosis_status",
+          "passed": true,
+          "detail": "actual=insufficient_evidence, expected=insufficient_evidence"
+        },
+        {
+          "check": "required_evidence_codes",
+          "passed": true,
+          "detail": "found=['DRY-122']"
+        },
+        {
+          "check": "required_missing_fields",
+          "passed": true,
+          "detail": "missing=['dryer_zone_2_temp_c']"
+        },
+        {
+          "check": "root_cause_evidence_ids",
+          "passed": true,
+          "detail": "all evidence references must exist"
+        },
+        {
+          "check": "action_candidate_links",
+          "passed": true,
+          "detail": "all action candidate references must exist"
+        },
+        {
+          "check": "evidence_graph_links",
+          "passed": true,
+          "detail": "all evidence graph endpoints must exist"
+        },
+        {
+          "check": "expected_action_types",
+          "passed": true,
+          "detail": "actual=['collect_data', 'inspect', 'quality', 'safety']"
+        },
+        {
+          "check": "root_cause_count",
+          "passed": true,
+          "detail": "actual=1, expected=[1, 3]"
+        },
+        {
+          "check": "confidence_cap",
+          "passed": true,
+          "detail": "actual=0.42, maximum=0.49"
+        },
+        {
+          "check": "report_sections",
+          "passed": true,
+          "detail": "required Markdown report sections are present"
+        },
+        {
+          "check": "deterministic_output",
+          "passed": true,
+          "detail": "two runs must produce identical JSON"
+        },
+        {
+          "check": "no_golden_label_dependency",
+          "passed": true,
+          "detail": "removing expected_outputs must not change the diagnosis"
+        },
+        {
+          "check": "forbidden_claims",
+          "passed": true,
+          "detail": "violations=[]"
+        }
+      ],
+      "score": 13,
+      "max_score": 13
+    }
+  ]
+}

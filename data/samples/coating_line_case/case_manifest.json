@@ -1,0 +1,40 @@
+{
+  "case_id": "coating_line_dryer_tension_001",
+  "title": "Coating line dryer temperature deviation with web tension oscillation",
+  "title_zh": "涂布线干燥二区温控异常与张力波动",
+  "industry": "battery manufacturing",
+  "line": "cell coating line A",
+  "station": "dryer section and web tension control",
+  "incident_window": {
+    "start": "2026-06-10T10:10:00+08:00",
+    "end": "2026-06-10T10:30:00+08:00"
+  },
+  "operator_note": "After a recipe switch, zone 2 temperature became unstable and the web tension alarm appeared intermittently. Thickness inspection showed drift after 10:22.",
+  "expected_sensor_fields": [
+    "timestamp",
+    "dryer_zone_1_temp_c",
+    "dryer_zone_2_temp_c",
+    "web_tension_n",
+    "line_speed_m_min",
+    "fan_frequency_hz",
+    "drive_current_a",
+    "thickness_um"
+  ],
+  "critical_evidence_fields": ["dryer_zone_2_temp_c"],
+  "business_context": {
+    "mttr_baseline_minutes": 50,
+    "target_mttr_reduction_pct": 40,
+    "downtime_cost_per_minute": 100
+  },
+  "files": {
+    "sensors": "sensor_readings.csv",
+    "alarms": "alarms.csv",
+    "sop": "sop_dryer_tension.md",
+    "maintenance_records": "maintenance_records.md"
+  },
+  "expected_outputs": {
+    "primary_root_cause": "dryer zone 2 temperature control loop instability",
+    "secondary_root_cause": "web tension closed-loop response lag",
+    "business_risk": "coating thickness drift and potential yield loss"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ForgePulse Diagnosis",
+  "type": "object",
+  "required": [
+    "case_id",
+    "diagnosis_status",
+    "incident_summary",
+    "timeline",
+    "root_cause_candidates",
+    "evidence",
+    "recommended_actions",
+    "work_order_draft",
+    "postmortem_summary",
+    "limitations"
+  ],
+  "properties": {
+    "case_id": { "type": "string" },
+    "diagnosis_status": {
+      "enum": ["confirmed", "provisional", "insufficient_evidence", "conflicting_evidence"]
+    },
+    "incident_summary": { "type": "string" },
+    "primary_root_cause": { "$ref": "#/$defs/rootCauseOrNull" },
+    "root_cause_candidates": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/rootCause" }
+    },
+    "contributing_factors": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/rootCause" }
+    },
+    "downstream_effects": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/rootCause" }
+    },
+    "business_risks": { "type": "array", "items": { "type": "string" } },
+    "missing_evidence": { "type": "array", "items": { "type": "string" } },
+    "conflicting_evidence": { "type": "array", "items": { "type": "string" } },
+    "timeline": { "type": "array", "items": { "type": "object" } },
+    "evidence": { "type": "array", "items": { "type": "object" } },
+    "recommended_actions": { "type": "array", "items": { "type": "object" } },
+    "work_order_draft": { "type": "object" },
+    "postmortem_summary": { "type": "string" },
+    "limitations": { "type": "array", "items": { "type": "string" } },
+    "diagnostic_process": { "type": "array", "items": { "type": "object" } },
+    "agent_decisions": { "type": "array", "items": { "type": "object" } },
+    "evidence_links": { "type": "array", "items": { "type": "object" } },
+    "data_quality": { "type": ["object", "null"] },
+    "value_estimates": { "type": "array", "items": { "type": "object" } }
+  },
+  "$defs": {
+    "rootCauseOrNull": {
+      "anyOf": [
+        { "$ref": "#/$defs/rootCause" },
+        { "type": "null" }
+      ]
+    },
+    "rootCause": {
+      "type": "object",
+      "required": [
+        "candidate_id",
+        "title",
+        "confidence",
+        "priority",
+        "evidence_ids",
+        "rationale",
+        "diagnostic_role"
+      ],
+      "properties": {
+        "candidate_id": { "type": "string" },
+        "title": { "type": "string" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "priority": { "enum": ["low", "medium", "high"] },
+        "evidence_ids": { "type": "array", "items": { "type": "string" } },
+        "rationale": { "type": "string" },
+        "diagnostic_role": {
+          "enum": ["equipment_cause", "coupled_secondary_factor", "quality_effect"]
+        },
+        "why_ranked": { "type": "string" },
+        "missing_evidence": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

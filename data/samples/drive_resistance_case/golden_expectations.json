@@ -1,0 +1,18 @@
+{
+  "case_id": "coating_line_drive_resistance_003",
+  "golden_expectations": {
+    "expected_primary_root_cause_keywords": ["roller", "contamination", "drive", "current", "resistance"],
+    "expected_secondary_root_cause_keywords": ["tension", "instability", "grip"],
+    "expected_business_risk_keywords": ["thickness", "non-uniformity", "waste", "material"],
+    "required_evidence_codes": ["DRV-410", "TEN-204", "QCS-318"],
+    "required_evidence_fields": ["drive_current_a", "web_tension_n", "thickness_um"],
+    "required_maintenance_records": ["M-2026-103"],
+    "forbidden_claims": [
+      "claims that replace on-site safety responsibility",
+      "claims of automatic equipment control",
+      "claims of verified production deployment"
+    ],
+    "expected_action_types": ["inspect", "quality", "safety"],
+    "expected_root_cause_count_range": [2, 5]
+  }
+}

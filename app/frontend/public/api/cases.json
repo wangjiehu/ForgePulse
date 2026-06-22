@@ -1,0 +1,42 @@
+[
+  {
+    "case_id": "coating_line_airflow_002",
+    "title": "Fan frequency drop causes dryer temperature drift and coating non-uniformity",
+    "title_zh": "风机频率下降引发干燥温漂与涂布不均",
+    "industry": "battery manufacturing",
+    "line": "cell coating line B",
+    "station": "dryer section airflow and temperature control"
+  },
+  {
+    "case_id": "coating_line_conflicting_evidence_005",
+    "title": "Dryer alarm conflicts with fan frequency evidence",
+    "title_zh": "干燥报警与风机频率证据冲突",
+    "industry": "battery manufacturing",
+    "line": "cell coating line C",
+    "station": "dryer airflow and temperature control"
+  },
+  {
+    "case_id": "coating_line_drive_resistance_003",
+    "title": "Drive current elevation and web tension instability due to roller contamination",
+    "title_zh": "辊面污染导致驱动电流升高与张力失稳",
+    "industry": "battery manufacturing",
+    "line": "cell coating line A",
+    "station": "drive system and web tension control"
+  },
+  {
+    "case_id": "coating_line_dryer_tension_001",
+    "title": "Coating line dryer temperature deviation with web tension oscillation",
+    "title_zh": "涂布线干燥二区温控异常与张力波动",
+    "industry": "battery manufacturing",
+    "line": "cell coating line A",
+    "station": "dryer section and web tension control"
+  },
+  {
+    "case_id": "coating_line_incomplete_evidence_004",
+    "title": "Dryer alarm with missing zone temperature evidence",
+    "title_zh": "干燥报警但关键温度证据缺失",
+    "industry": "battery manufacturing",
+    "line": "cell coating line C",
+    "station": "dryer section"
+  }
+]

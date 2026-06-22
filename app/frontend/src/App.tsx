@@ -147,7 +147,12 @@ interface CaseMeta {
   station: string;
 }
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
+const isProd = import.meta.env.PROD;
+const API_BASE = isProd
+  ? `${window.location.origin}${window.location.pathname.replace(/\/$/, "")}/api`
+  : (import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000");
+
+const USE_STATIC_API = isProd || import.meta.env.VITE_STATIC_API === "true";
 
 const STATUS_LABEL: Record<DiagnosisStatus, string> = {
   confirmed: "证据充分",
@@ -199,13 +204,17 @@ function translateEvidenceIssue(value: string) {
 }
 
 async function fetchCases(): Promise<CaseMeta[]> {
-  const response = await fetch(`${API_BASE}/cases`);
+  const url = USE_STATIC_API ? `${API_BASE}/cases.json` : `${API_BASE}/cases`;
+  const response = await fetch(url);
   if (!response.ok) throw new Error(`案例列表加载失败 (${response.status})`);
   return response.json();
 }
 
 async function fetchDiagnosis(caseId: string): Promise<Diagnosis> {
-  const response = await fetch(`${API_BASE}/cases/${caseId}/diagnosis`);
+  const url = USE_STATIC_API
+    ? `${API_BASE}/cases/${caseId}/diagnosis.json`
+    : `${API_BASE}/cases/${caseId}/diagnosis`;
+  const response = await fetch(url);
   if (!response.ok) {
     const payload = await response.json().catch(() => null);
     const detail = payload?.detail?.issues?.join("; ") ?? payload?.detail ?? response.status;
@@ -215,7 +224,9 @@ async function fetchDiagnosis(caseId: string): Promise<Diagnosis> {
 }
 
 function reportUrl(caseId: string) {
-  return `${API_BASE}/cases/${caseId}/report`;
+  return USE_STATIC_API
+    ? `${API_BASE}/cases/${caseId}/report.md`
+    : `${API_BASE}/cases/${caseId}/report`;
 }
 
 function formatTime(value: string) {

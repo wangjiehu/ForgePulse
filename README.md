@@ -2,6 +2,8 @@
 
 ForgePulse is an industry Agent for battery manufacturing equipment diagnosis and maintenance decision support.
 
+🚀 **Online Demo / 在线体验**: [https://wangjiehu.github.io/ForgePulse/](https://wangjiehu.github.io/ForgePulse/)
+
 中文定位：
 
 > ForgePulse 面向新能源电池产线，把传感器时序、报警日志、设备 SOP、维修记录和现场描述整合成可追溯的故障诊断、处置建议、维修工单和复盘报告。

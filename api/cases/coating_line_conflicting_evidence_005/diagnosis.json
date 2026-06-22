@@ -1,0 +1,411 @@
+{
+  "case_id": "coating_line_conflicting_evidence_005",
+  "diagnosis_status": "conflicting_evidence",
+  "incident_summary": "Dryer alarm conflicts with fan frequency evidence. Alarm and sensor evidence conflict; verification is required before repair. Incident window: 2026-09-18T15:00:00+08:00 to 2026-09-18T15:24:00+08:00.",
+  "timeline": [
+    {
+      "timestamp": "2026-09-18T15:06:15+08:00",
+      "title": "Alarm DRY-122",
+      "detail": "Major: Dryer zone 2 temperature deviation above control band (status: active)",
+      "severity": "major",
+      "evidence_ids": [
+        "EV-001"
+      ]
+    },
+    {
+      "timestamp": "2026-09-18T15:16:00+08:00",
+      "title": "fan_frequency_hz threshold violation",
+      "detail": "fan_frequency_hz fell below threshold at 41.4.",
+      "severity": "major",
+      "evidence_ids": []
+    },
+    {
+      "timestamp": "2026-09-18T15:21:20+08:00",
+      "title": "Alarm DRY-122",
+      "detail": "Major: Dryer zone 2 temperature deviation above control band (status: recovered)",
+      "severity": "major",
+      "evidence_ids": [
+        "EV-002"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "EV-001",
+      "source": "alarms.csv",
+      "summary": "DRY-122 major alarm: Dryer zone 2 temperature deviation above control band",
+      "timestamp": "2026-09-18T15:06:15+08:00",
+      "field": null,
+      "value": "DRY-122"
+    },
+    {
+      "id": "EV-002",
+      "source": "alarms.csv",
+      "summary": "DRY-122 major alarm: Dryer zone 2 temperature deviation above control band",
+      "timestamp": "2026-09-18T15:21:20+08:00",
+      "field": null,
+      "value": "DRY-122"
+    },
+    {
+      "id": "EV-003",
+      "source": "sensor_readings.csv",
+      "summary": "fan_frequency_hz below threshold at 41.4",
+      "timestamp": "2026-09-18T15:16:00+08:00",
+      "field": "fan_frequency_hz",
+      "value": "41.4"
+    },
+    {
+      "id": "EV-004",
+      "source": "sop_dryer_airflow_verification.md",
+      "summary": "SOP section 'Overview' is relevant to observed anomalies.",
+      "timestamp": null,
+      "field": null,
+      "value": null
+    },
+    {
+      "id": "EV-005",
+      "source": "sop_dryer_airflow_verification.md",
+      "summary": "SOP section 'DRY-122 Instrument Verification' is relevant to observed anomalies.",
+      "timestamp": null,
+      "field": null,
+      "value": null
+    },
+    {
+      "id": "EV-006",
+      "source": "sop_dryer_airflow_verification.md",
+      "summary": "SOP section 'AIR-305 Fan Frequency Verification' is relevant to observed anomalies.",
+      "timestamp": null,
+      "field": null,
+      "value": null
+    },
+    {
+      "id": "EV-007",
+      "source": "maintenance_records.md",
+      "summary": "Maintenance record M-2026-151: A dryer alarm and fan frequency drop occurred in the same window. The repair decision was deferred until sensor calibration and inverter output were checked independently.",
+      "timestamp": null,
+      "field": null,
+      "value": "M-2026-151"
+    }
+  ],
+  "root_cause_candidates": [
+    {
+      "candidate_id": "RC-001",
+      "title": "Dryer zone 2 temperature control loop instability",
+      "title_zh": "干燥二区温度控制回路不稳定",
+      "confidence": 0.59,
+      "priority": "high",
+      "evidence_ids": [
+        "EV-001",
+        "EV-002",
+        "EV-005",
+        "EV-006",
+        "EV-007"
+      ],
+      "rationale": "Matched alarm codes: DRY-122. SOP sections provide relevant check procedures. Historical maintenance records show similar patterns.",
+      "score_breakdown": {
+        "alarm_match": 1.0,
+        "sensor_correlation": 0.0,
+        "sop_match": 1.0,
+        "maintenance_similarity": 0.5,
+        "operator_note_match": 0.217,
+        "total": 0.597
+      },
+      "fault_mode_id": "FM-001",
+      "diagnostic_role": "equipment_cause",
+      "why_ranked": "Ranked from alarm 100%, sensor 0%, SOP 100%, maintenance 50%, and operator note 22% evidence.",
+      "missing_evidence": [
+        "primary sensor anomaly: dryer_zone_2_temp_c"
+      ]
+    },
+    {
+      "candidate_id": "RC-002",
+      "title": "Fan inverter airflow frequency instability",
+      "title_zh": "风机变频与风量频率不稳定",
+      "confidence": 0.44,
+      "priority": "medium",
+      "evidence_ids": [
+        "EV-003",
+        "EV-006",
+        "EV-007"
+      ],
+      "rationale": "Anomalous sensor fields: fan_frequency_hz. SOP sections provide relevant check procedures. Historical maintenance records show similar patterns.",
+      "score_breakdown": {
+        "alarm_match": 0.0,
+        "sensor_correlation": 1.0,
+        "sop_match": 0.5,
+        "maintenance_similarity": 0.5,
+        "operator_note_match": 0.16,
+        "total": 0.441
+      },
+      "fault_mode_id": "FM-003",
+      "diagnostic_role": "equipment_cause",
+      "why_ranked": "Ranked from alarm 0%, sensor 100%, SOP 50%, maintenance 50%, and operator note 16% evidence.",
+      "missing_evidence": [
+        "primary alarm: AIR-305"
+      ]
+    }
+  ],
+  "primary_root_cause": {
+    "candidate_id": "RC-001",
+    "title": "Dryer zone 2 temperature control loop instability",
+    "title_zh": "干燥二区温度控制回路不稳定",
+    "confidence": 0.59,
+    "priority": "high",
+    "evidence_ids": [
+      "EV-001",
+      "EV-002",
+      "EV-005",
+      "EV-006",
+      "EV-007"
+    ],
+    "rationale": "Matched alarm codes: DRY-122. SOP sections provide relevant check procedures. Historical maintenance records show similar patterns.",
+    "score_breakdown": {
+      "alarm_match": 1.0,
+      "sensor_correlation": 0.0,
+      "sop_match": 1.0,
+      "maintenance_similarity": 0.5,
+      "operator_note_match": 0.217,
+      "total": 0.597
+    },
+    "fault_mode_id": "FM-001",
+    "diagnostic_role": "equipment_cause",
+    "why_ranked": "Ranked from alarm 100%, sensor 0%, SOP 100%, maintenance 50%, and operator note 22% evidence.",
+    "missing_evidence": [
+      "primary sensor anomaly: dryer_zone_2_temp_c"
+    ]
+  },
+  "contributing_factors": [],
+  "downstream_effects": [],
+  "business_risks": [],
+  "missing_evidence": [
+    "primary sensor anomaly: dryer_zone_2_temp_c"
+  ],
+  "conflicting_evidence": [
+    "alarms favor Dryer zone 2 temperature control loop instability, while sensor anomalies favor Fan inverter airflow frequency instability"
+  ],
+  "recommended_actions": [
+    {
+      "action_id": "ACT-001",
+      "title": "Reconcile conflicting evidence before repair",
+      "type": "verify",
+      "linked_candidate_ids": [
+        "RC-001",
+        "RC-002"
+      ],
+      "detail": "Verify sensor calibration, alarm timestamps, and equipment state because the evidence channels disagree: alarms favor Dryer zone 2 temperature control loop instability, while sensor anomalies favor Fan inverter airflow frequency instability",
+      "role": "equipment_engineer"
+    },
+    {
+      "action_id": "ACT-002",
+      "title": "Follow SOP: DRY-122 Instrument Verification",
+      "type": "inspect",
+      "linked_candidate_ids": [
+        "RC-001"
+      ],
+      "detail": "Per SOP section 'DRY-122 Instrument Verification': Compare controller temperature with an independent calibrated sensor.; Check alarm timestamp alignment before replacing the heater or controller.; Record controller output and heater current.",
+      "role": "equipment_engineer"
+    },
+    {
+      "action_id": "ACT-003",
+      "title": "Follow SOP: AIR-305 Fan Frequency Verification",
+      "type": "inspect",
+      "linked_candidate_ids": [
+        "RC-002"
+      ],
+      "detail": "Per SOP section 'AIR-305 Fan Frequency Verification': Compare inverter command frequency with measured fan frequency.; Inspect the inverter cooling path and airflow filter.; Verify power quality before changing inverter parameters.",
+      "role": "equipment_engineer"
+    },
+    {
+      "action_id": "ACT-004",
+      "title": "Confirm safety procedures before equipment intervention",
+      "type": "safety",
+      "linked_candidate_ids": [
+        "RC-001",
+        "RC-002"
+      ],
+      "detail": "All equipment inspections and interventions must follow factory safety procedures. Do not bypass interlocks or overcurrent protection. Final equipment operation requires on-site engineer confirmation.",
+      "role": "safety_reviewer"
+    }
+  ],
+  "work_order_draft": {
+    "title": "Check cell coating line C dryer airflow and temperature control",
+    "priority": "high",
+    "assignee_role": "equipment engineer",
+    "tasks": [
+      "Verify sensor calibration, alarm timestamps, and equipment state because the evidence channels disagree: alarms favor Dryer zone 2 temperature control loop instability, while sensor anomalies favor Fan inverter airflow frequency instability",
+      "Per SOP section 'DRY-122 Instrument Verification': Compare controller temperature with an independent calibrated sensor.; Check alarm timestamp alignment before replacing the heater or controller.; Record controller output and heater current.",
+      "Per SOP section 'AIR-305 Fan Frequency Verification': Compare inverter command frequency with measured fan frequency.; Inspect the inverter cooling path and airflow filter.; Verify power quality before changing inverter parameters."
+    ],
+    "safety_notes": [
+      "All equipment inspections and interventions must follow factory safety procedures. Do not bypass interlocks or overcurrent protection. Final equipment operation requires on-site engineer confirmation."
+    ]
+  },
+  "postmortem_summary": "The incident contains conflicting alarm and sensor evidence. Validate instrumentation and timestamp alignment before selecting a repair path.",
+  "limitations": [
+    "This diagnosis is generated from synthetic demo data.",
+    "Real equipment actions require factory safety procedures and engineer confirmation.",
+    "Deterministic analysis only – no LLM reasoning applied.",
+    "Configured value estimates are scenario calculations, not validated production results."
+  ],
+  "diagnostic_process": [
+    {
+      "step": "Data Loading",
+      "status": "completed",
+      "detail": "Loaded manifest, 7 sensor rows, 2 alarm rows, SOP and maintenance records.",
+      "duration_ms": null
+    },
+    {
+      "step": "Data Validation",
+      "status": "completed",
+      "detail": "Sensor rows: 7, Alarms: 2, SOP sections: 2, Maintenance records: 1.",
+      "duration_ms": null
+    },
+    {
+      "step": "Signal Anomaly Detection",
+      "status": "completed",
+      "detail": "Detected 1 anomalies across 1 fields. Correlated findings: 0.",
+      "duration_ms": null
+    },
+    {
+      "step": "Alarm Correlation",
+      "status": "completed",
+      "detail": "Parsed 2 alarm events. Alarm codes: DRY-122.",
+      "duration_ms": null
+    },
+    {
+      "step": "SOP & Maintenance Retrieval",
+      "status": "completed",
+      "detail": "Retrieved 3 SOP sections and 1 maintenance records.",
+      "duration_ms": null
+    },
+    {
+      "step": "Root Cause Ranking",
+      "status": "completed",
+      "detail": "Matched 2 candidates from 5 fault modes. Primary: Dryer zone 2 temperature control loop instability (status: conflicting_evidence).",
+      "duration_ms": null
+    },
+    {
+      "step": "Evidence Sufficiency Decision",
+      "status": "completed",
+      "detail": "Decision: conflicting_evidence. Missing: primary sensor anomaly: dryer_zone_2_temp_c. Conflicts: alarms favor Dryer zone 2 temperature control loop instability, while sensor anomalies favor Fan inverter airflow frequency instability.",
+      "duration_ms": null
+    },
+    {
+      "step": "Action Planning",
+      "status": "completed",
+      "detail": "Generated 4 recommended actions across roles: equipment_engineer, safety_reviewer.",
+      "duration_ms": null
+    },
+    {
+      "step": "Report Generation",
+      "status": "completed",
+      "detail": "Generated timeline (3 events), work order, evidence graph (15 links), and value estimates.",
+      "duration_ms": null
+    }
+  ],
+  "agent_decisions": [
+    {
+      "state": "load",
+      "decision": "continue",
+      "reason": "All required case resources were loaded."
+    },
+    {
+      "state": "validate",
+      "decision": "continue",
+      "reason": "Case data passed quality checks without warnings."
+    },
+    {
+      "state": "assess_evidence",
+      "decision": "conflicting_evidence",
+      "reason": "alarms favor Dryer zone 2 temperature control loop instability, while sensor anomalies favor Fan inverter airflow frequency instability"
+    }
+  ],
+  "evidence_links": [
+    {
+      "source_id": "RC-001",
+      "target_id": "EV-001",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-001",
+      "target_id": "EV-002",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-001",
+      "target_id": "EV-005",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-001",
+      "target_id": "EV-006",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-001",
+      "target_id": "EV-007",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-002",
+      "target_id": "EV-003",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-002",
+      "target_id": "EV-006",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-002",
+      "target_id": "EV-007",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "EV-001",
+      "target_id": "alarms.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-002",
+      "target_id": "alarms.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-003",
+      "target_id": "sensor_readings.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-004",
+      "target_id": "sop_dryer_airflow_verification.md",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-005",
+      "target_id": "sop_dryer_airflow_verification.md",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-006",
+      "target_id": "sop_dryer_airflow_verification.md",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-007",
+      "target_id": "maintenance_records.md",
+      "relation": "from_source"
+    }
+  ],
+  "data_quality": {
+    "sensor_rows": 7,
+    "alarm_events": 2,
+    "sop_sections": 2,
+    "maintenance_records": 1,
+    "missing_fields": [],
+    "warnings": [],
+    "invalid_fields": [],
+    "completeness_score": 1.0
+  },
+  "value_estimates": []
+}

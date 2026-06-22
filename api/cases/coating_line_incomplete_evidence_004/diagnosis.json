@@ -1,0 +1,412 @@
+{
+  "case_id": "coating_line_incomplete_evidence_004",
+  "diagnosis_status": "insufficient_evidence",
+  "incident_summary": "Dryer alarm with missing zone temperature evidence. Evidence is insufficient to confirm a root cause. Incident window: 2026-09-05T11:00:00+08:00 to 2026-09-05T11:20:00+08:00.",
+  "timeline": [
+    {
+      "timestamp": "2026-09-05T11:05:20+08:00",
+      "title": "Alarm DRY-122",
+      "detail": "Major: Dryer zone 2 temperature deviation above control band (status: active)",
+      "severity": "major",
+      "evidence_ids": [
+        "EV-001"
+      ]
+    },
+    {
+      "timestamp": "2026-09-05T11:15:40+08:00",
+      "title": "Alarm QCS-318",
+      "detail": "Warning: Coating thickness approaching upper specification limit (status: active)",
+      "severity": "warning",
+      "evidence_ids": [
+        "EV-002"
+      ]
+    },
+    {
+      "timestamp": "2026-09-05T11:16:00+08:00",
+      "title": "thickness_um threshold violation",
+      "detail": "thickness_um exceeded threshold at 104.6.",
+      "severity": "major",
+      "evidence_ids": []
+    },
+    {
+      "timestamp": "2026-09-05T11:16:00+08:00",
+      "title": "thickness_um reached peak",
+      "detail": "thickness_um drifted upward to 104.6 (Δ+3.6).",
+      "severity": "major",
+      "evidence_ids": []
+    },
+    {
+      "timestamp": "2026-09-05T11:19:10+08:00",
+      "title": "Alarm DRY-122",
+      "detail": "Major: Dryer zone 2 temperature deviation above control band (status: recovered)",
+      "severity": "major",
+      "evidence_ids": [
+        "EV-003"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "EV-001",
+      "source": "alarms.csv",
+      "summary": "DRY-122 major alarm: Dryer zone 2 temperature deviation above control band",
+      "timestamp": "2026-09-05T11:05:20+08:00",
+      "field": null,
+      "value": "DRY-122"
+    },
+    {
+      "id": "EV-002",
+      "source": "alarms.csv",
+      "summary": "QCS-318 warning alarm: Coating thickness approaching upper specification limit",
+      "timestamp": "2026-09-05T11:15:40+08:00",
+      "field": null,
+      "value": "QCS-318"
+    },
+    {
+      "id": "EV-003",
+      "source": "alarms.csv",
+      "summary": "DRY-122 major alarm: Dryer zone 2 temperature deviation above control band",
+      "timestamp": "2026-09-05T11:19:10+08:00",
+      "field": null,
+      "value": "DRY-122"
+    },
+    {
+      "id": "EV-004",
+      "source": "sensor_readings.csv",
+      "summary": "thickness_um above threshold at 104.6",
+      "timestamp": "2026-09-05T11:16:00+08:00",
+      "field": "thickness_um",
+      "value": "104.6"
+    },
+    {
+      "id": "EV-005",
+      "source": "sensor_readings.csv",
+      "summary": "thickness_um sustained upward drift, peak 104.6 (Δ+3.6)",
+      "timestamp": "2026-09-05T11:16:00+08:00",
+      "field": "thickness_um",
+      "value": "104.6"
+    },
+    {
+      "id": "EV-006",
+      "source": "sop_partial_dryer.md",
+      "summary": "SOP section 'DRY-122 Initial Safety Check' is relevant to observed anomalies.",
+      "timestamp": null,
+      "field": null,
+      "value": null
+    }
+  ],
+  "root_cause_candidates": [
+    {
+      "candidate_id": "RC-001",
+      "title": "Dryer zone 2 temperature control loop instability",
+      "title_zh": "干燥二区温度控制回路不稳定",
+      "confidence": 0.42,
+      "priority": "medium",
+      "evidence_ids": [
+        "EV-001",
+        "EV-003",
+        "EV-006"
+      ],
+      "rationale": "Matched alarm codes: DRY-122. SOP sections provide relevant check procedures.",
+      "score_breakdown": {
+        "alarm_match": 1.0,
+        "sensor_correlation": 0.0,
+        "sop_match": 0.5,
+        "maintenance_similarity": 0.0,
+        "operator_note_match": 0.174,
+        "total": 0.417
+      },
+      "fault_mode_id": "FM-001",
+      "diagnostic_role": "equipment_cause",
+      "why_ranked": "Ranked from alarm 100%, sensor 0%, SOP 50%, maintenance 0%, and operator note 17% evidence.",
+      "missing_evidence": [
+        "primary sensor anomaly: dryer_zone_2_temp_c"
+      ]
+    }
+  ],
+  "primary_root_cause": {
+    "candidate_id": "RC-001",
+    "title": "Dryer zone 2 temperature control loop instability",
+    "title_zh": "干燥二区温度控制回路不稳定",
+    "confidence": 0.42,
+    "priority": "medium",
+    "evidence_ids": [
+      "EV-001",
+      "EV-003",
+      "EV-006"
+    ],
+    "rationale": "Matched alarm codes: DRY-122. SOP sections provide relevant check procedures.",
+    "score_breakdown": {
+      "alarm_match": 1.0,
+      "sensor_correlation": 0.0,
+      "sop_match": 0.5,
+      "maintenance_similarity": 0.0,
+      "operator_note_match": 0.174,
+      "total": 0.417
+    },
+    "fault_mode_id": "FM-001",
+    "diagnostic_role": "equipment_cause",
+    "why_ranked": "Ranked from alarm 100%, sensor 0%, SOP 50%, maintenance 0%, and operator note 17% evidence.",
+    "missing_evidence": [
+      "primary sensor anomaly: dryer_zone_2_temp_c"
+    ]
+  },
+  "contributing_factors": [],
+  "downstream_effects": [
+    {
+      "candidate_id": "RC-002",
+      "title": "Coating thickness drift and yield risk",
+      "title_zh": "涂层厚度漂移与良率风险",
+      "confidence": 0.49,
+      "priority": "high",
+      "evidence_ids": [
+        "EV-002",
+        "EV-004",
+        "EV-005"
+      ],
+      "rationale": "Matched alarm codes: QCS-318. Anomalous sensor fields: thickness_um.",
+      "score_breakdown": {
+        "alarm_match": 1.0,
+        "sensor_correlation": 1.0,
+        "sop_match": 0.0,
+        "maintenance_similarity": 0.0,
+        "operator_note_match": 0.05,
+        "total": 0.555
+      },
+      "fault_mode_id": "FM-005",
+      "diagnostic_role": "quality_effect",
+      "why_ranked": "Ranked from alarm 100%, sensor 100%, SOP 0%, maintenance 0%, and operator note 5% evidence.",
+      "missing_evidence": []
+    }
+  ],
+  "business_risks": [
+    "Coating thickness drift and yield risk"
+  ],
+  "missing_evidence": [
+    "critical sensor field: dryer_zone_2_temp_c",
+    "primary sensor anomaly: dryer_zone_2_temp_c"
+  ],
+  "conflicting_evidence": [],
+  "recommended_actions": [
+    {
+      "action_id": "ACT-001",
+      "title": "Collect missing diagnostic evidence",
+      "type": "collect_data",
+      "linked_candidate_ids": [],
+      "detail": "Collect and validate the following evidence before confirming a root cause: critical sensor field: dryer_zone_2_temp_c; primary sensor anomaly: dryer_zone_2_temp_c",
+      "role": "equipment_engineer"
+    },
+    {
+      "action_id": "ACT-002",
+      "title": "Perform bounded manual inspection",
+      "type": "inspect",
+      "linked_candidate_ids": [
+        "RC-001"
+      ],
+      "detail": "Inspect the affected station using the applicable SOP without replacing interlocks or making automatic control changes.",
+      "role": "equipment_engineer"
+    },
+    {
+      "action_id": "ACT-003",
+      "title": "Follow SOP: DRY-122 Initial Safety Check",
+      "type": "inspect",
+      "linked_candidate_ids": [
+        "RC-001"
+      ],
+      "detail": "Per SOP section 'DRY-122 Initial Safety Check': Confirm the alarm timestamp and affected recipe.; Verify that the temperature historian channel is available and calibrated.; Do not replace components until temperature evidence is restored.",
+      "role": "equipment_engineer"
+    },
+    {
+      "action_id": "ACT-004",
+      "title": "Quality engineer review of affected material",
+      "type": "quality",
+      "linked_candidate_ids": [
+        "RC-002"
+      ],
+      "detail": "Isolate affected material roll range. Request quality engineer review before release. Document thickness deviation for batch record.",
+      "role": "quality_engineer"
+    },
+    {
+      "action_id": "ACT-005",
+      "title": "Confirm safety procedures before equipment intervention",
+      "type": "safety",
+      "linked_candidate_ids": [
+        "RC-001",
+        "RC-002"
+      ],
+      "detail": "All equipment inspections and interventions must follow factory safety procedures. Do not bypass interlocks or overcurrent protection. Final equipment operation requires on-site engineer confirmation.",
+      "role": "safety_reviewer"
+    }
+  ],
+  "work_order_draft": {
+    "title": "Check cell coating line C dryer section",
+    "priority": "high",
+    "assignee_role": "equipment engineer",
+    "tasks": [
+      "Collect and validate the following evidence before confirming a root cause: critical sensor field: dryer_zone_2_temp_c; primary sensor anomaly: dryer_zone_2_temp_c",
+      "Inspect the affected station using the applicable SOP without replacing interlocks or making automatic control changes.",
+      "Per SOP section 'DRY-122 Initial Safety Check': Confirm the alarm timestamp and affected recipe.; Verify that the temperature historian channel is available and calibrated.; Do not replace components until temperature evidence is restored.",
+      "Isolate affected material roll range. Request quality engineer review before release. Document thickness deviation for batch record."
+    ],
+    "safety_notes": [
+      "All equipment inspections and interventions must follow factory safety procedures. Do not bypass interlocks or overcurrent protection. Final equipment operation requires on-site engineer confirmation."
+    ]
+  },
+  "postmortem_summary": "The available evidence does not support a reliable root-cause conclusion. Collect the listed missing evidence and repeat the bounded diagnosis before approving repair work.",
+  "limitations": [
+    "This diagnosis is generated from synthetic demo data.",
+    "Real equipment actions require factory safety procedures and engineer confirmation.",
+    "Deterministic analysis only – no LLM reasoning applied.",
+    "Configured value estimates are scenario calculations, not validated production results."
+  ],
+  "diagnostic_process": [
+    {
+      "step": "Data Loading",
+      "status": "completed",
+      "detail": "Loaded manifest, 6 sensor rows, 3 alarm rows, SOP and maintenance records.",
+      "duration_ms": null
+    },
+    {
+      "step": "Data Validation",
+      "status": "completed",
+      "detail": "Sensor rows: 6, Alarms: 3, SOP sections: 2, Maintenance records: 1. Warnings: Missing sensor fields: dryer_zone_2_temp_c",
+      "duration_ms": null
+    },
+    {
+      "step": "Signal Anomaly Detection",
+      "status": "completed",
+      "detail": "Detected 2 anomalies across 1 fields. Correlated findings: 0.",
+      "duration_ms": null
+    },
+    {
+      "step": "Alarm Correlation",
+      "status": "completed",
+      "detail": "Parsed 3 alarm events. Alarm codes: DRY-122, QCS-318.",
+      "duration_ms": null
+    },
+    {
+      "step": "SOP & Maintenance Retrieval",
+      "status": "completed",
+      "detail": "Retrieved 1 SOP sections and 0 maintenance records.",
+      "duration_ms": null
+    },
+    {
+      "step": "Root Cause Ranking",
+      "status": "completed",
+      "detail": "Matched 2 candidates from 5 fault modes. Primary: Dryer zone 2 temperature control loop instability (status: insufficient_evidence).",
+      "duration_ms": null
+    },
+    {
+      "step": "Evidence Sufficiency Decision",
+      "status": "completed",
+      "detail": "Decision: insufficient_evidence. Missing: critical sensor field: dryer_zone_2_temp_c; primary sensor anomaly: dryer_zone_2_temp_c.",
+      "duration_ms": null
+    },
+    {
+      "step": "Action Planning",
+      "status": "completed",
+      "detail": "Generated 5 recommended actions across roles: equipment_engineer, quality_engineer, safety_reviewer.",
+      "duration_ms": null
+    },
+    {
+      "step": "Report Generation",
+      "status": "completed",
+      "detail": "Generated timeline (5 events), work order, evidence graph (12 links), and value estimates.",
+      "duration_ms": null
+    }
+  ],
+  "agent_decisions": [
+    {
+      "state": "load",
+      "decision": "continue",
+      "reason": "All required case resources were loaded."
+    },
+    {
+      "state": "validate",
+      "decision": "continue_with_caution",
+      "reason": "Missing sensor fields: dryer_zone_2_temp_c"
+    },
+    {
+      "state": "assess_evidence",
+      "decision": "insufficient_evidence",
+      "reason": "critical sensor field: dryer_zone_2_temp_c; primary sensor anomaly: dryer_zone_2_temp_c"
+    }
+  ],
+  "evidence_links": [
+    {
+      "source_id": "RC-001",
+      "target_id": "EV-001",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-001",
+      "target_id": "EV-003",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-001",
+      "target_id": "EV-006",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-002",
+      "target_id": "EV-002",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-002",
+      "target_id": "EV-004",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-002",
+      "target_id": "EV-005",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "EV-001",
+      "target_id": "alarms.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-002",
+      "target_id": "alarms.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-003",
+      "target_id": "alarms.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-004",
+      "target_id": "sensor_readings.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-005",
+      "target_id": "sensor_readings.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-006",
+      "target_id": "sop_partial_dryer.md",
+      "relation": "from_source"
+    }
+  ],
+  "data_quality": {
+    "sensor_rows": 6,
+    "alarm_events": 3,
+    "sop_sections": 2,
+    "maintenance_records": 1,
+    "missing_fields": [
+      "dryer_zone_2_temp_c"
+    ],
+    "warnings": [
+      "Missing sensor fields: dryer_zone_2_temp_c"
+    ],
+    "invalid_fields": [],
+    "completeness_score": 0.75
+  },
+  "value_estimates": []
+}

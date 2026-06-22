@@ -1,0 +1,701 @@
+{
+  "case_id": "coating_line_dryer_tension_001",
+  "diagnosis_status": "confirmed",
+  "incident_summary": "Coating line dryer temperature deviation with web tension oscillation. Primary root cause: Dryer zone 2 temperature control loop instability. Incident window: 2026-06-10T10:10:00+08:00 to 2026-06-10T10:30:00+08:00.",
+  "timeline": [
+    {
+      "timestamp": "2026-06-10T10:12:30+08:00",
+      "title": "Alarm TEN-204",
+      "detail": "Warning: Web tension oscillation exceeds warning band (status: active)",
+      "severity": "warning",
+      "evidence_ids": [
+        "EV-001"
+      ]
+    },
+    {
+      "timestamp": "2026-06-10T10:18:00+08:00",
+      "title": "web_tension_n threshold violation",
+      "detail": "web_tension_n exceeded threshold at 139.2.",
+      "severity": "major",
+      "evidence_ids": []
+    },
+    {
+      "timestamp": "2026-06-10T10:18:10+08:00",
+      "title": "Alarm DRY-122",
+      "detail": "Major: Dryer zone 2 temperature deviation above control band (status: active)",
+      "severity": "major",
+      "evidence_ids": [
+        "EV-002"
+      ]
+    },
+    {
+      "timestamp": "2026-06-10T10:20:00+08:00",
+      "title": "dryer_zone_2_temp_c threshold violation",
+      "detail": "dryer_zone_2_temp_c exceeded threshold at 97.1.",
+      "severity": "major",
+      "evidence_ids": []
+    },
+    {
+      "timestamp": "2026-06-10T10:22:00+08:00",
+      "title": "thickness_um threshold violation",
+      "detail": "thickness_um exceeded threshold at 106.3.",
+      "severity": "major",
+      "evidence_ids": []
+    },
+    {
+      "timestamp": "2026-06-10T10:22:40+08:00",
+      "title": "Alarm QCS-318",
+      "detail": "Warning: Coating thickness drift detected by inline inspection (status: active)",
+      "severity": "warning",
+      "evidence_ids": [
+        "EV-003"
+      ]
+    },
+    {
+      "timestamp": "2026-06-10T10:28:20+08:00",
+      "title": "Alarm TEN-204",
+      "detail": "Warning: Web tension oscillation exceeds warning band (status: recovered)",
+      "severity": "warning",
+      "evidence_ids": [
+        "EV-004"
+      ]
+    },
+    {
+      "timestamp": "2026-06-10T10:30:15+08:00",
+      "title": "Alarm DRY-122",
+      "detail": "Major: Dryer zone 2 temperature deviation above control band (status: recovered)",
+      "severity": "major",
+      "evidence_ids": [
+        "EV-005"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "EV-001",
+      "source": "alarms.csv",
+      "summary": "TEN-204 warning alarm: Web tension oscillation exceeds warning band",
+      "timestamp": "2026-06-10T10:12:30+08:00",
+      "field": null,
+      "value": "TEN-204"
+    },
+    {
+      "id": "EV-002",
+      "source": "alarms.csv",
+      "summary": "DRY-122 major alarm: Dryer zone 2 temperature deviation above control band",
+      "timestamp": "2026-06-10T10:18:10+08:00",
+      "field": null,
+      "value": "DRY-122"
+    },
+    {
+      "id": "EV-003",
+      "source": "alarms.csv",
+      "summary": "QCS-318 warning alarm: Coating thickness drift detected by inline inspection",
+      "timestamp": "2026-06-10T10:22:40+08:00",
+      "field": null,
+      "value": "QCS-318"
+    },
+    {
+      "id": "EV-004",
+      "source": "alarms.csv",
+      "summary": "TEN-204 warning alarm: Web tension oscillation exceeds warning band",
+      "timestamp": "2026-06-10T10:28:20+08:00",
+      "field": null,
+      "value": "TEN-204"
+    },
+    {
+      "id": "EV-005",
+      "source": "alarms.csv",
+      "summary": "DRY-122 major alarm: Dryer zone 2 temperature deviation above control band",
+      "timestamp": "2026-06-10T10:30:15+08:00",
+      "field": null,
+      "value": "DRY-122"
+    },
+    {
+      "id": "EV-006",
+      "source": "sensor_readings.csv",
+      "summary": "dryer_zone_2_temp_c above threshold at 97.1",
+      "timestamp": "2026-06-10T10:20:00+08:00",
+      "field": "dryer_zone_2_temp_c",
+      "value": "97.1"
+    },
+    {
+      "id": "EV-007",
+      "source": "sensor_readings.csv",
+      "summary": "web_tension_n above threshold at 139.2",
+      "timestamp": "2026-06-10T10:18:00+08:00",
+      "field": "web_tension_n",
+      "value": "139.2"
+    },
+    {
+      "id": "EV-008",
+      "source": "sensor_readings.csv",
+      "summary": "thickness_um above threshold at 106.3",
+      "timestamp": "2026-06-10T10:22:00+08:00",
+      "field": "thickness_um",
+      "value": "106.3"
+    },
+    {
+      "id": "EV-009",
+      "source": "sop_dryer_tension.md",
+      "summary": "SOP section 'Overview' is relevant to observed anomalies.",
+      "timestamp": null,
+      "field": null,
+      "value": null
+    },
+    {
+      "id": "EV-010",
+      "source": "sop_dryer_tension.md",
+      "summary": "SOP section 'DRY-122 Dryer Zone Temperature Deviation' is relevant to observed anomalies.",
+      "timestamp": null,
+      "field": null,
+      "value": null
+    },
+    {
+      "id": "EV-011",
+      "source": "sop_dryer_tension.md",
+      "summary": "SOP section 'TEN-204 Web Tension Oscillation' is relevant to observed anomalies.",
+      "timestamp": null,
+      "field": null,
+      "value": null
+    },
+    {
+      "id": "EV-012",
+      "source": "sop_dryer_tension.md",
+      "summary": "SOP section 'QCS-318 Thickness Drift' is relevant to observed anomalies.",
+      "timestamp": null,
+      "field": null,
+      "value": null
+    },
+    {
+      "id": "EV-013",
+      "source": "maintenance_records.md",
+      "summary": "Maintenance record M-2026-041: Line: cell coating line A",
+      "timestamp": null,
+      "field": null,
+      "value": "M-2026-041"
+    },
+    {
+      "id": "EV-014",
+      "source": "maintenance_records.md",
+      "summary": "Maintenance record M-2026-057: Line: cell coating line B",
+      "timestamp": null,
+      "field": null,
+      "value": "M-2026-057"
+    }
+  ],
+  "root_cause_candidates": [
+    {
+      "candidate_id": "RC-001",
+      "title": "Dryer zone 2 temperature control loop instability",
+      "title_zh": "干燥二区温度控制回路不稳定",
+      "confidence": 0.91,
+      "priority": "high",
+      "evidence_ids": [
+        "EV-002",
+        "EV-005",
+        "EV-006",
+        "EV-010",
+        "EV-012",
+        "EV-013",
+        "EV-014"
+      ],
+      "rationale": "Matched alarm codes: DRY-122. Anomalous sensor fields: dryer_zone_2_temp_c. SOP sections provide relevant check procedures. Historical maintenance records show similar patterns.",
+      "score_breakdown": {
+        "alarm_match": 1.0,
+        "sensor_correlation": 1.0,
+        "sop_match": 1.0,
+        "maintenance_similarity": 1.0,
+        "operator_note_match": 0.13,
+        "total": 0.913
+      },
+      "fault_mode_id": "FM-001",
+      "diagnostic_role": "equipment_cause",
+      "why_ranked": "Ranked from alarm 100%, sensor 100%, SOP 100%, maintenance 100%, and operator note 13% evidence.",
+      "missing_evidence": []
+    },
+    {
+      "candidate_id": "RC-002",
+      "title": "Web tension closed-loop response lag",
+      "title_zh": "卷材张力闭环响应滞后",
+      "confidence": 0.82,
+      "priority": "high",
+      "evidence_ids": [
+        "EV-001",
+        "EV-004",
+        "EV-007",
+        "EV-011",
+        "EV-012",
+        "EV-013"
+      ],
+      "rationale": "Matched alarm codes: TEN-204. Anomalous sensor fields: web_tension_n. SOP sections provide relevant check procedures. Historical maintenance records show similar patterns.",
+      "score_breakdown": {
+        "alarm_match": 1.0,
+        "sensor_correlation": 1.0,
+        "sop_match": 1.0,
+        "maintenance_similarity": 0.5,
+        "operator_note_match": 0.207,
+        "total": 0.82
+      },
+      "fault_mode_id": "FM-002",
+      "diagnostic_role": "coupled_secondary_factor",
+      "why_ranked": "Ranked from alarm 100%, sensor 100%, SOP 100%, maintenance 50%, and operator note 21% evidence.",
+      "missing_evidence": []
+    }
+  ],
+  "primary_root_cause": {
+    "candidate_id": "RC-001",
+    "title": "Dryer zone 2 temperature control loop instability",
+    "title_zh": "干燥二区温度控制回路不稳定",
+    "confidence": 0.91,
+    "priority": "high",
+    "evidence_ids": [
+      "EV-002",
+      "EV-005",
+      "EV-006",
+      "EV-010",
+      "EV-012",
+      "EV-013",
+      "EV-014"
+    ],
+    "rationale": "Matched alarm codes: DRY-122. Anomalous sensor fields: dryer_zone_2_temp_c. SOP sections provide relevant check procedures. Historical maintenance records show similar patterns.",
+    "score_breakdown": {
+      "alarm_match": 1.0,
+      "sensor_correlation": 1.0,
+      "sop_match": 1.0,
+      "maintenance_similarity": 1.0,
+      "operator_note_match": 0.13,
+      "total": 0.913
+    },
+    "fault_mode_id": "FM-001",
+    "diagnostic_role": "equipment_cause",
+    "why_ranked": "Ranked from alarm 100%, sensor 100%, SOP 100%, maintenance 100%, and operator note 13% evidence.",
+    "missing_evidence": []
+  },
+  "contributing_factors": [
+    {
+      "candidate_id": "RC-002",
+      "title": "Web tension closed-loop response lag",
+      "title_zh": "卷材张力闭环响应滞后",
+      "confidence": 0.82,
+      "priority": "high",
+      "evidence_ids": [
+        "EV-001",
+        "EV-004",
+        "EV-007",
+        "EV-011",
+        "EV-012",
+        "EV-013"
+      ],
+      "rationale": "Matched alarm codes: TEN-204. Anomalous sensor fields: web_tension_n. SOP sections provide relevant check procedures. Historical maintenance records show similar patterns.",
+      "score_breakdown": {
+        "alarm_match": 1.0,
+        "sensor_correlation": 1.0,
+        "sop_match": 1.0,
+        "maintenance_similarity": 0.5,
+        "operator_note_match": 0.207,
+        "total": 0.82
+      },
+      "fault_mode_id": "FM-002",
+      "diagnostic_role": "coupled_secondary_factor",
+      "why_ranked": "Ranked from alarm 100%, sensor 100%, SOP 100%, maintenance 50%, and operator note 21% evidence.",
+      "missing_evidence": []
+    }
+  ],
+  "downstream_effects": [
+    {
+      "candidate_id": "RC-003",
+      "title": "Coating thickness drift and yield risk",
+      "title_zh": "涂层厚度漂移与良率风险",
+      "confidence": 0.74,
+      "priority": "high",
+      "evidence_ids": [
+        "EV-003",
+        "EV-008",
+        "EV-010",
+        "EV-011",
+        "EV-012",
+        "EV-013",
+        "EV-014"
+      ],
+      "rationale": "Matched alarm codes: QCS-318. Anomalous sensor fields: thickness_um. SOP sections provide relevant check procedures. Historical maintenance records show similar patterns.",
+      "score_breakdown": {
+        "alarm_match": 1.0,
+        "sensor_correlation": 1.0,
+        "sop_match": 1.0,
+        "maintenance_similarity": 1.0,
+        "operator_note_match": 0.25,
+        "total": 0.74
+      },
+      "fault_mode_id": "FM-005",
+      "diagnostic_role": "quality_effect",
+      "why_ranked": "Ranked from alarm 100%, sensor 100%, SOP 100%, maintenance 100%, and operator note 25% evidence.",
+      "missing_evidence": []
+    }
+  ],
+  "business_risks": [
+    "Coating thickness drift and yield risk"
+  ],
+  "missing_evidence": [],
+  "conflicting_evidence": [],
+  "recommended_actions": [
+    {
+      "action_id": "ACT-001",
+      "title": "Follow SOP: DRY-122 Dryer Zone Temperature Deviation",
+      "type": "inspect",
+      "linked_candidate_ids": [
+        "RC-001"
+      ],
+      "detail": "Per SOP section 'DRY-122 Dryer Zone Temperature Deviation': Confirm the recipe target temperature and upper/lower control limits.; Check temperature sensor wiring and calibration status.; Inspect heater relay response and controller output.",
+      "role": "equipment_engineer"
+    },
+    {
+      "action_id": "ACT-002",
+      "title": "Follow SOP: TEN-204 Web Tension Oscillation",
+      "type": "inspect",
+      "linked_candidate_ids": [
+        "RC-001",
+        "RC-002"
+      ],
+      "detail": "Per SOP section 'TEN-204 Web Tension Oscillation': Check dancer roller position feedback.; Check tension controller response after recipe switch.; Inspect drive current trend and roller surface contamination.",
+      "role": "equipment_engineer"
+    },
+    {
+      "action_id": "ACT-003",
+      "title": "Follow SOP: QCS-318 Thickness Drift",
+      "type": "inspect",
+      "linked_candidate_ids": [
+        "RC-003"
+      ],
+      "detail": "Per SOP section 'QCS-318 Thickness Drift': Correlate drift time with temperature, tension and line speed changes.; Isolate affected material roll range.; Request quality engineer review before release.",
+      "role": "equipment_engineer"
+    },
+    {
+      "action_id": "ACT-004",
+      "title": "Quality engineer review of affected material",
+      "type": "quality",
+      "linked_candidate_ids": [
+        "RC-003"
+      ],
+      "detail": "Isolate affected material roll range. Request quality engineer review before release. Document thickness deviation for batch record.",
+      "role": "quality_engineer"
+    },
+    {
+      "action_id": "ACT-005",
+      "title": "Notify production supervisor",
+      "type": "escalate",
+      "linked_candidate_ids": [
+        "RC-001",
+        "RC-002",
+        "RC-003"
+      ],
+      "detail": "High-priority root causes detected: Dryer zone 2 temperature control loop instability, Web tension closed-loop response lag, Coating thickness drift and yield risk. Production supervisor should be notified for resource allocation and scheduling decisions.",
+      "role": "production_supervisor"
+    },
+    {
+      "action_id": "ACT-006",
+      "title": "Confirm safety procedures before equipment intervention",
+      "type": "safety",
+      "linked_candidate_ids": [
+        "RC-001",
+        "RC-002",
+        "RC-003"
+      ],
+      "detail": "All equipment inspections and interventions must follow factory safety procedures. Do not bypass interlocks or overcurrent protection. Final equipment operation requires on-site engineer confirmation.",
+      "role": "safety_reviewer"
+    }
+  ],
+  "work_order_draft": {
+    "title": "Check cell coating line A dryer section and web tension control",
+    "priority": "high",
+    "assignee_role": "equipment engineer",
+    "tasks": [
+      "Per SOP section 'DRY-122 Dryer Zone Temperature Deviation': Confirm the recipe target temperature and upper/lower control limits.; Check temperature sensor wiring and calibration status.; Inspect heater relay response and controller output.",
+      "Per SOP section 'TEN-204 Web Tension Oscillation': Check dancer roller position feedback.; Check tension controller response after recipe switch.; Inspect drive current trend and roller surface contamination.",
+      "Per SOP section 'QCS-318 Thickness Drift': Correlate drift time with temperature, tension and line speed changes.; Isolate affected material roll range.; Request quality engineer review before release.",
+      "Isolate affected material roll range. Request quality engineer review before release. Document thickness deviation for batch record.",
+      "High-priority root causes detected: Dryer zone 2 temperature control loop instability, Web tension closed-loop response lag, Coating thickness drift and yield risk. Production supervisor should be notified for resource allocation and scheduling decisions."
+    ],
+    "safety_notes": [
+      "All equipment inspections and interventions must follow factory safety procedures. Do not bypass interlocks or overcurrent protection. Final equipment operation requires on-site engineer confirmation."
+    ]
+  },
+  "postmortem_summary": "The incident likely originated from Dryer zone 2 temperature control loop instability, with Web tension closed-loop response lag as a coupled secondary factor. Downstream effects should be reviewed by the quality team.",
+  "limitations": [
+    "This diagnosis is generated from synthetic demo data.",
+    "Real equipment actions require factory safety procedures and engineer confirmation.",
+    "Deterministic analysis only – no LLM reasoning applied.",
+    "Configured value estimates are scenario calculations, not validated production results."
+  ],
+  "diagnostic_process": [
+    {
+      "step": "Data Loading",
+      "status": "completed",
+      "detail": "Loaded manifest, 12 sensor rows, 5 alarm rows, SOP and maintenance records.",
+      "duration_ms": null
+    },
+    {
+      "step": "Data Validation",
+      "status": "completed",
+      "detail": "Sensor rows: 12, Alarms: 5, SOP sections: 3, Maintenance records: 2.",
+      "duration_ms": null
+    },
+    {
+      "step": "Signal Anomaly Detection",
+      "status": "completed",
+      "detail": "Detected 3 anomalies across 3 fields. Correlated findings: 3.",
+      "duration_ms": null
+    },
+    {
+      "step": "Alarm Correlation",
+      "status": "completed",
+      "detail": "Parsed 5 alarm events. Alarm codes: DRY-122, QCS-318, TEN-204.",
+      "duration_ms": null
+    },
+    {
+      "step": "SOP & Maintenance Retrieval",
+      "status": "completed",
+      "detail": "Retrieved 4 SOP sections and 2 maintenance records.",
+      "duration_ms": null
+    },
+    {
+      "step": "Root Cause Ranking",
+      "status": "completed",
+      "detail": "Matched 3 candidates from 5 fault modes. Primary: Dryer zone 2 temperature control loop instability (status: confirmed).",
+      "duration_ms": null
+    },
+    {
+      "step": "Evidence Sufficiency Decision",
+      "status": "completed",
+      "detail": "Decision: confirmed.",
+      "duration_ms": null
+    },
+    {
+      "step": "Action Planning",
+      "status": "completed",
+      "detail": "Generated 6 recommended actions across roles: equipment_engineer, production_supervisor, quality_engineer, safety_reviewer.",
+      "duration_ms": null
+    },
+    {
+      "step": "Report Generation",
+      "status": "completed",
+      "detail": "Generated timeline (8 events), work order, evidence graph (34 links), and value estimates.",
+      "duration_ms": null
+    }
+  ],
+  "agent_decisions": [
+    {
+      "state": "load",
+      "decision": "continue",
+      "reason": "All required case resources were loaded."
+    },
+    {
+      "state": "validate",
+      "decision": "continue",
+      "reason": "Case data passed quality checks without warnings."
+    },
+    {
+      "state": "assess_evidence",
+      "decision": "confirmed",
+      "reason": "Primary candidate has 91% confidence with sufficient evidence."
+    }
+  ],
+  "evidence_links": [
+    {
+      "source_id": "RC-001",
+      "target_id": "EV-002",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-001",
+      "target_id": "EV-005",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-001",
+      "target_id": "EV-006",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-001",
+      "target_id": "EV-010",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-001",
+      "target_id": "EV-012",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-001",
+      "target_id": "EV-013",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-001",
+      "target_id": "EV-014",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-002",
+      "target_id": "EV-001",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-002",
+      "target_id": "EV-004",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-002",
+      "target_id": "EV-007",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-002",
+      "target_id": "EV-011",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-002",
+      "target_id": "EV-012",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-002",
+      "target_id": "EV-013",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-003",
+      "target_id": "EV-003",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-003",
+      "target_id": "EV-008",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-003",
+      "target_id": "EV-010",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-003",
+      "target_id": "EV-011",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-003",
+      "target_id": "EV-012",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-003",
+      "target_id": "EV-013",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "RC-003",
+      "target_id": "EV-014",
+      "relation": "supported_by"
+    },
+    {
+      "source_id": "EV-001",
+      "target_id": "alarms.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-002",
+      "target_id": "alarms.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-003",
+      "target_id": "alarms.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-004",
+      "target_id": "alarms.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-005",
+      "target_id": "alarms.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-006",
+      "target_id": "sensor_readings.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-007",
+      "target_id": "sensor_readings.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-008",
+      "target_id": "sensor_readings.csv",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-009",
+      "target_id": "sop_dryer_tension.md",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-010",
+      "target_id": "sop_dryer_tension.md",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-011",
+      "target_id": "sop_dryer_tension.md",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-012",
+      "target_id": "sop_dryer_tension.md",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-013",
+      "target_id": "maintenance_records.md",
+      "relation": "from_source"
+    },
+    {
+      "source_id": "EV-014",
+      "target_id": "maintenance_records.md",
+      "relation": "from_source"
+    }
+  ],
+  "data_quality": {
+    "sensor_rows": 12,
+    "alarm_events": 5,
+    "sop_sections": 3,
+    "maintenance_records": 2,
+    "missing_fields": [],
+    "warnings": [],
+    "invalid_fields": [],
+    "completeness_score": 1.0
+  },
+  "value_estimates": [
+    {
+      "metric": "MTTR reduction target",
+      "baseline": "50 min configured pilot baseline",
+      "projected": "30 min at a 40% reduction target",
+      "assumption": "Scenario calculation from case_manifest business_context; not a validated production result.",
+      "configured": true
+    },
+    {
+      "metric": "Avoided downtime scenario",
+      "baseline": "100 currency units per downtime minute",
+      "projected": "2000 currency units per incident",
+      "assumption": "Illustrative scenario only. Currency and plant cost must be configured and validated during a pilot.",
+      "configured": true
+    }
+  ]
+}

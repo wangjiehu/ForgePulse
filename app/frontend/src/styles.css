@@ -70,11 +70,11 @@ code {
   color: #eef4f2;
   background: #172a2a;
   border-right: 1px solid #294140;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 .sidebar::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
+  display: none;
 }
 
 .brand {
@@ -1236,7 +1236,6 @@ code {
   color: #64748b;
 }
 
-/* Process node status colors with subtle neon glows */
 .process-node.status-normal {
   border-color: #cbd5e1;
 }
@@ -1281,7 +1280,6 @@ code {
     border-color: rgba(239, 68, 68, 0.8);
   }
 }
-
 
 /* --- Causal Evidence Map Styles --- */
 .evidence-map-body {
@@ -1364,7 +1362,6 @@ code {
   margin-top: 4px;
 }
 
-/* Evidence node button */
 .evidence-node {
   width: 100%;
   cursor: pointer;
@@ -1443,7 +1440,6 @@ code {
   border-bottom: 2px solid #cbd5e1;
   transform: rotate(-45deg);
 }
-
 
 /* --- Agent Terminal style overrides --- */
 .terminal-header {
@@ -1601,7 +1597,6 @@ code {
   overflow: hidden;
 }
 
-/* Scrollable Section utility */
 .section-block.scrollable {
   flex: 1;
   min-height: 0;
@@ -1614,15 +1609,14 @@ code {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .section-block.scrollable .section-body::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
+  display: none;
 }
 
-/* Compact Process Map adjustments */
 .process-map-card {
   border-radius: 8px !important;
 }
@@ -1644,7 +1638,6 @@ code {
   min-width: 110px !important;
 }
 
-/* Compact Causal Evidence Map adjustments */
 .evidence-map-card {
   flex: 0 0 auto;
   border-radius: 8px !important;
@@ -1668,7 +1661,6 @@ code {
   font-size: 10px !important;
 }
 
-/* Compact Data Quality Card */
 .data-quality-card {
   flex: 0 0 auto;
   border-radius: 8px !important;
@@ -1691,7 +1683,6 @@ code {
   font-size: 14px !important;
 }
 
-/* Compact Primary Finding */
 .primary-finding-compact {
   flex: 0 0 auto;
   display: flex;
@@ -1725,7 +1716,6 @@ code {
   font-size: 22px;
 }
 
-/* Actions & Work Order scroll container */
 .actions-work-order-scroll-container {
   display: flex;
   flex-direction: column;
@@ -1736,7 +1726,6 @@ code {
   grid-template-columns: 1fr !important;
 }
 
-/* Side-by-side or slim banner adjustments */
 .decision-banner {
   margin-top: 0 !important;
   border-radius: 8px;
@@ -1767,4 +1756,3 @@ code {
   align-self: flex-start !important;
   font-size: 11px !important;
 }
-

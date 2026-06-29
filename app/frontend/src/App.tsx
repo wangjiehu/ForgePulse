@@ -400,6 +400,37 @@ export default function App() {
     }, 20);
   }, []);
 
+  const lineStatus = useMemo(() => {
+    const status = {
+      unwind: "normal",
+      coater: "normal",
+      dryer1: "normal",
+      dryer2: "normal",
+      tension: "normal",
+      wind: "normal",
+    };
+
+    if (!diagnosis) return status;
+
+    const alarmCodes = new Set(diagnosis.evidence.map(e => e.value).filter(Boolean));
+    const anomalyFields = new Set(diagnosis.evidence.map(e => e.field).filter(Boolean));
+
+    if (anomalyFields.has("dryer_zone_2_temp_c") || alarmCodes.has("DRY-122") || anomalyFields.has("fan_frequency_hz") || alarmCodes.has("AIR-305")) {
+      status.dryer2 = diagnosis.diagnosis_status === "conflicting_evidence" ? "warning" : "critical";
+    }
+    if (anomalyFields.has("dryer_zone_1_temp_c") || alarmCodes.has("DRY-110")) {
+      status.dryer1 = "warning";
+    }
+    if (anomalyFields.has("thickness_um") || alarmCodes.has("QCS-318")) {
+      status.coater = "warning";
+    }
+    if (anomalyFields.has("web_tension_n") || alarmCodes.has("TEN-204") || anomalyFields.has("drive_current_a") || alarmCodes.has("DRV-410")) {
+      status.tension = "critical";
+    }
+
+    return status;
+  }, [diagnosis]);
+
   const renderEvidenceButtons = (ids: string[]) => (
     <span className="evidence-tags">
       {ids.map((id) => (
@@ -534,6 +565,58 @@ export default function App() {
               </section>
             )}
 
+            {/* Coating Line Process Map */}
+            <section className="process-map-card section-block wide">
+              <header className="section-header">
+                <Factory size={19} />
+                <h3>极片涂布产线物理监测图 (Coating Line Process Map)</h3>
+              </header>
+              <div className="process-map-body">
+                <div className="process-flow">
+                  <div className={`process-node status-${lineStatus.unwind}`}>
+                    <div className="node-icon">🌀</div>
+                    <span className="node-name">放卷段 (Unwind)</span>
+                    <span className="node-status">正常运行</span>
+                  </div>
+                  <div className="flow-arrow">➔</div>
+                  
+                  <div className={`process-node status-${lineStatus.coater}`}>
+                    <div className="node-icon">⚙️</div>
+                    <span className="node-name">机头涂布 / QCS</span>
+                    <span className="node-status">{lineStatus.coater === "normal" ? "正常运行" : "厚度漂移"}</span>
+                  </div>
+                  <div className="flow-arrow">➔</div>
+
+                  <div className={`process-node status-${lineStatus.dryer1}`}>
+                    <div className="node-icon">🔥</div>
+                    <span className="node-name">干燥一区 (Dryer Z1)</span>
+                    <span className="node-status">{lineStatus.dryer1 === "normal" ? "正常运行" : "温度波动"}</span>
+                  </div>
+                  <div className="flow-arrow">➔</div>
+
+                  <div className={`process-node status-${lineStatus.dryer2}`}>
+                    <div className="node-icon">🔥</div>
+                    <span className="node-name">干燥二区 (Dryer Z2)</span>
+                    <span className="node-status">{lineStatus.dryer2 === "normal" ? "正常运行" : "温控较差"}</span>
+                  </div>
+                  <div className="flow-arrow">➔</div>
+
+                  <div className={`process-node status-${lineStatus.tension}`}>
+                    <div className="node-icon">🔄</div>
+                    <span className="node-name">张力驱动段 (Tension)</span>
+                    <span className="node-status">{lineStatus.tension === "normal" ? "正常运行" : "阻力/张力偏大"}</span>
+                  </div>
+                  <div className="flow-arrow">➔</div>
+
+                  <div className={`process-node status-${lineStatus.wind}`}>
+                    <div className="node-icon">🌀</div>
+                    <span className="node-name">收卷段 (Wind)</span>
+                    <span className="node-status">正常运行</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
             {diagnosis.primary_root_cause && (
               <section className="primary-finding">
                 <div>
@@ -546,14 +629,95 @@ export default function App() {
               </section>
             )}
 
+            {/* Interactive Causal Evidence Map */}
+            <section className="evidence-map-card section-block wide">
+              <header className="section-header">
+                <FileSearch size={19} />
+                <h3>诊断因果证据网络图 (Causal Evidence Map)</h3>
+              </header>
+              <div className="evidence-map-body">
+                <div className="evidence-map-workspace">
+                  <div className="map-column">
+                    <span className="column-title">推断根因 (Candidates)</span>
+                    <div className="map-nodes">
+                      {diagnosis.root_cause_candidates.slice(0, 3).map((rc) => (
+                        <div key={rc.candidate_id} className={`map-node candidate-node priority-${rc.priority}`}>
+                          <div className="node-header">
+                            <code>{rc.candidate_id}</code>
+                            <strong>{rc.title_zh || rc.title}</strong>
+                          </div>
+                          <div className="node-meta">置信度: {percentage(rc.confidence)}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="map-connector-column">
+                    <div className="connector-path"></div>
+                  </div>
+
+                  <div className="map-column">
+                    <span className="column-title">关联证据 (Evidence Nodes)</span>
+                    <div className="map-nodes">
+                      {diagnosis.evidence.slice(0, 7).map((ev) => {
+                        const isAlarm = ev.source.includes("alarm");
+                        const isSensor = ev.source.includes("sensor");
+                        const typeClass = isAlarm ? "alarm" : isSensor ? "sensor" : "record";
+                        return (
+                          <button
+                            key={ev.id}
+                            className={`map-node evidence-node type-${typeClass}`}
+                            onClick={() => focusEvidence(ev.id)}
+                            title="点击定位到下方原始数据"
+                          >
+                            <code>{ev.id}</code>
+                            <span>{ev.summary}</span>
+                          </button>
+                        );
+                      })}
+                      {diagnosis.evidence.length > 7 && (
+                        <div className="map-nodes-more">
+                          + 还有 {diagnosis.evidence.length - 7} 项证据关联中
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="map-connector-column">
+                    <div className="connector-path"></div>
+                  </div>
+
+                  <div className="map-column">
+                    <span className="column-title">数据来源 (Sources)</span>
+                    <div className="map-nodes">
+                      {Array.from(new Set(diagnosis.evidence.map((e) => e.source))).map((source) => (
+                        <div key={source} className="map-node source-node">
+                          <FileText size={14} />
+                          <span>{source}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
             <div className="section-grid">
               <Section icon={<CheckCircle2 size={19} />} title="Agent 决策轨迹">
-                <ol className="decision-list">
+                <div className="terminal-header">
+                  <span className="terminal-dot red"></span>
+                  <span className="terminal-dot yellow"></span>
+                  <span className="terminal-dot green"></span>
+                  <span className="terminal-title">agent_decision_trace.log</span>
+                  <span className="terminal-status"><span className="pulse-dot"></span>ACTIVE</span>
+                </div>
+                <ol className="decision-list terminal-style">
                   {diagnosis.agent_decisions.map((item, index) => (
                     <li key={`${item.state}-${index}`}>
+                      <span className="terminal-prompt">&gt;</span>
                       <code>{item.state}</code>
-                      <strong>{DECISION_LABEL[item.decision] ?? item.decision}</strong>
-                      <span>{item.reason}</span>
+                      <strong className={`decision-${item.decision}`}>{DECISION_LABEL[item.decision] ?? item.decision}</strong>
+                      <span className="terminal-reason">{item.reason}</span>
                     </li>
                   ))}
                 </ol>

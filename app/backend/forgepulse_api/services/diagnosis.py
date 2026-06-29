@@ -156,8 +156,14 @@ def _build_timeline(
             return [ev_by_source_value[key]]
         ids = []
         for k, vid in ev_by_source_value.items():
-            if k.startswith(f"{source}|{value}|"):
-                ids.append(vid)
+            parts = k.split("|")
+            if parts[0] != source:
+                continue
+            if value and (len(parts) < 2 or parts[1] != value):
+                continue
+            if timestamp and parts[-1] != timestamp:
+                continue
+            ids.append(vid)
         return ids
 
     timeline: list[TimelineEvent] = []

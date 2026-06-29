@@ -245,14 +245,18 @@ function Section({
   title,
   children,
   wide = false,
+  scrollable = false,
+  className = "",
 }: {
   icon: ReactNode;
   title: string;
   children: ReactNode;
   wide?: boolean;
+  scrollable?: boolean;
+  className?: string;
 }) {
   return (
-    <section className={`section-block${wide ? " wide" : ""}`}>
+    <section className={`section-block${wide ? " wide" : ""}${scrollable ? " scrollable" : ""} ${className}`}>
       <header className="section-header">
         {icon}
         <h3>{title}</h3>
@@ -539,309 +543,322 @@ export default function App() {
         {loading && !diagnosis && <div className="loading"><Activity className="spin" /><span>正在核验数据、报警和维修证据</span></div>}
 
         {diagnosis && (
-          <>
-            <section className={`decision-banner status-${diagnosis.diagnosis_status}`}>
-              <div>
-                <span>诊断状态</span>
-                <strong>{STATUS_LABEL[diagnosis.diagnosis_status]}</strong>
-              </div>
-              <p>{localizedSummary}</p>
-            </section>
-
-            {(diagnosis.missing_evidence.length > 0 || diagnosis.conflicting_evidence.length > 0) && (
-              <section className="evidence-alerts">
-                {diagnosis.missing_evidence.length > 0 && (
-                  <div>
-                    <FileSearch size={18} />
-                    <span><strong>缺失证据</strong>{diagnosis.missing_evidence.map(translateEvidenceIssue).join("；")}</span>
-                  </div>
-                )}
-                {diagnosis.conflicting_evidence.length > 0 && (
-                  <div>
-                    <AlertTriangle size={18} />
-                    <span><strong>冲突证据</strong>{diagnosis.conflicting_evidence.map(translateEvidenceIssue).join("；")}</span>
-                  </div>
-                )}
-              </section>
-            )}
-
-            {/* Coating Line Process Map */}
-            <section className="process-map-card section-block wide">
-              <header className="section-header">
-                <Factory size={19} />
-                <h3>极片涂布产线物理监测图 (Coating Line Process Map)</h3>
-              </header>
-              <div className="process-map-body">
-                <div className="process-flow">
-                  <div className={`process-node status-${lineStatus.unwind}`}>
-                    <div className="node-icon">🌀</div>
-                    <span className="node-name">放卷段 (Unwind)</span>
-                    <span className="node-status">正常运行</span>
-                  </div>
-                  <div className="flow-arrow">➔</div>
-                  
-                  <div className={`process-node status-${lineStatus.coater}`}>
-                    <div className="node-icon">⚙️</div>
-                    <span className="node-name">机头涂布 / QCS</span>
-                    <span className="node-status">{lineStatus.coater === "normal" ? "正常运行" : "厚度漂移"}</span>
-                  </div>
-                  <div className="flow-arrow">➔</div>
-
-                  <div className={`process-node status-${lineStatus.dryer1}`}>
-                    <div className="node-icon">🔥</div>
-                    <span className="node-name">干燥一区 (Dryer Z1)</span>
-                    <span className="node-status">{lineStatus.dryer1 === "normal" ? "正常运行" : "温度波动"}</span>
-                  </div>
-                  <div className="flow-arrow">➔</div>
-
-                  <div className={`process-node status-${lineStatus.dryer2}`}>
-                    <div className="node-icon">🔥</div>
-                    <span className="node-name">干燥二区 (Dryer Z2)</span>
-                    <span className="node-status">{lineStatus.dryer2 === "normal" ? "正常运行" : "温控较差"}</span>
-                  </div>
-                  <div className="flow-arrow">➔</div>
-
-                  <div className={`process-node status-${lineStatus.tension}`}>
-                    <div className="node-icon">🔄</div>
-                    <span className="node-name">张力驱动段 (Tension)</span>
-                    <span className="node-status">{lineStatus.tension === "normal" ? "正常运行" : "阻力/张力偏大"}</span>
-                  </div>
-                  <div className="flow-arrow">➔</div>
-
-                  <div className={`process-node status-${lineStatus.wind}`}>
-                    <div className="node-icon">🌀</div>
-                    <span className="node-name">收卷段 (Wind)</span>
-                    <span className="node-status">正常运行</span>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {diagnosis.primary_root_cause && (
-              <section className="primary-finding">
+          <div className="dashboard-body">
+            {/* Top Row: Decision Banner + Process Map */}
+            <div className="dashboard-row-top">
+              <section className={`decision-banner status-${diagnosis.diagnosis_status}`}>
                 <div>
-                  <span>主根因</span>
-                  <h3>{diagnosis.primary_root_cause.title_zh ?? diagnosis.primary_root_cause.title}</h3>
-                  {diagnosis.primary_root_cause.title_zh && <small>{diagnosis.primary_root_cause.title}</small>}
-                  <p>{diagnosis.primary_root_cause.why_ranked}</p>
+                  <span>诊断状态</span>
+                  <strong>{STATUS_LABEL[diagnosis.diagnosis_status]}</strong>
                 </div>
-                <strong>{percentage(diagnosis.primary_root_cause.confidence)}</strong>
+                <p>{localizedSummary}</p>
               </section>
-            )}
 
-            {/* Interactive Causal Evidence Map */}
-            <section className="evidence-map-card section-block wide">
-              <header className="section-header">
-                <FileSearch size={19} />
-                <h3>诊断因果证据网络图 (Causal Evidence Map)</h3>
-              </header>
-              <div className="evidence-map-body">
-                <div className="evidence-map-workspace">
-                  <div className="map-column">
-                    <span className="column-title">推断根因 (Candidates)</span>
-                    <div className="map-nodes">
-                      {diagnosis.root_cause_candidates.slice(0, 3).map((rc) => (
-                        <div key={rc.candidate_id} className={`map-node candidate-node priority-${rc.priority}`}>
-                          <div className="node-header">
-                            <code>{rc.candidate_id}</code>
-                            <strong>{rc.title_zh || rc.title}</strong>
-                          </div>
-                          <div className="node-meta">置信度: {percentage(rc.confidence)}</div>
-                        </div>
-                      ))}
+              <section className="process-map-card section-block">
+                <header className="section-header">
+                  <Factory size={16} />
+                  <h3>极片涂布产线物理监测图 (Coating Line Process Map)</h3>
+                </header>
+                <div className="process-map-body">
+                  <div className="process-flow">
+                    <div className={`process-node status-${lineStatus.unwind}`}>
+                      <div className="node-icon">🌀</div>
+                      <span className="node-name">放卷 (Unwind)</span>
+                      <span className="node-status">正常</span>
                     </div>
-                  </div>
-
-                  <div className="map-connector-column">
-                    <div className="connector-path"></div>
-                  </div>
-
-                  <div className="map-column">
-                    <span className="column-title">关联证据 (Evidence Nodes)</span>
-                    <div className="map-nodes">
-                      {diagnosis.evidence.slice(0, 7).map((ev) => {
-                        const isAlarm = ev.source.includes("alarm");
-                        const isSensor = ev.source.includes("sensor");
-                        const typeClass = isAlarm ? "alarm" : isSensor ? "sensor" : "record";
-                        return (
-                          <button
-                            key={ev.id}
-                            className={`map-node evidence-node type-${typeClass}`}
-                            onClick={() => focusEvidence(ev.id)}
-                            title="点击定位到下方原始数据"
-                          >
-                            <code>{ev.id}</code>
-                            <span>{ev.summary}</span>
-                          </button>
-                        );
-                      })}
-                      {diagnosis.evidence.length > 7 && (
-                        <div className="map-nodes-more">
-                          + 还有 {diagnosis.evidence.length - 7} 项证据关联中
-                        </div>
-                      )}
+                    <div className="flow-arrow">➔</div>
+                    
+                    <div className={`process-node status-${lineStatus.coater}`}>
+                      <div className="node-icon">⚙️</div>
+                      <span className="node-name">涂布/QCS</span>
+                      <span className="node-status">{lineStatus.coater === "normal" ? "正常" : "厚度漂移"}</span>
                     </div>
-                  </div>
+                    <div className="flow-arrow">➔</div>
 
-                  <div className="map-connector-column">
-                    <div className="connector-path"></div>
-                  </div>
+                    <div className={`process-node status-${lineStatus.dryer1}`}>
+                      <div className="node-icon">🔥</div>
+                      <span className="node-name">干燥一区 (Z1)</span>
+                      <span className="node-status">{lineStatus.dryer1 === "normal" ? "正常" : "温升异常"}</span>
+                    </div>
+                    <div className="flow-arrow">➔</div>
 
-                  <div className="map-column">
-                    <span className="column-title">数据来源 (Sources)</span>
-                    <div className="map-nodes">
-                      {Array.from(new Set(diagnosis.evidence.map((e) => e.source))).map((source) => (
-                        <div key={source} className="map-node source-node">
-                          <FileText size={14} />
-                          <span>{source}</span>
-                        </div>
-                      ))}
+                    <div className={`process-node status-${lineStatus.dryer2}`}>
+                      <div className="node-icon">🔥</div>
+                      <span className="node-name">干燥二区 (Z2)</span>
+                      <span className="node-status">{lineStatus.dryer2 === "normal" ? "正常" : "温控偏差"}</span>
+                    </div>
+                    <div className="flow-arrow">➔</div>
+
+                    <div className={`process-node status-${lineStatus.tension}`}>
+                      <div className="node-icon">🔄</div>
+                      <span className="node-name">张力驱动 (Tension)</span>
+                      <span className="node-status">{lineStatus.tension === "normal" ? "正常" : "阻力偏大"}</span>
+                    </div>
+                    <div className="flow-arrow">➔</div>
+
+                    <div className={`process-node status-${lineStatus.wind}`}>
+                      <div className="node-icon">🌀</div>
+                      <span className="node-name">收卷 (Wind)</span>
+                      <span className="node-status">正常</span>
                     </div>
                   </div>
                 </div>
-              </div>
-            </section>
-
-            <div className="section-grid">
-              <Section icon={<CheckCircle2 size={19} />} title="Agent 决策轨迹">
-                <div className="terminal-header">
-                  <span className="terminal-dot red"></span>
-                  <span className="terminal-dot yellow"></span>
-                  <span className="terminal-dot green"></span>
-                  <span className="terminal-title">agent_decision_trace.log</span>
-                  <span className="terminal-status"><span className="pulse-dot"></span>ACTIVE</span>
-                </div>
-                <ol className="decision-list terminal-style">
-                  {diagnosis.agent_decisions.map((item, index) => (
-                    <li key={`${item.state}-${index}`}>
-                      <span className="terminal-prompt">&gt;</span>
-                      <code>{item.state}</code>
-                      <strong className={`decision-${item.decision}`}>{DECISION_LABEL[item.decision] ?? item.decision}</strong>
-                      <span className="terminal-reason">{item.reason}</span>
-                    </li>
-                  ))}
-                </ol>
-              </Section>
-
-              <Section icon={<BarChart3 size={19} />} title="数据质量">
-                <div className="quality-metrics">
-                  <div><span>传感器行</span><strong>{diagnosis.data_quality?.sensor_rows ?? 0}</strong></div>
-                  <div><span>报警事件</span><strong>{diagnosis.data_quality?.alarm_events ?? 0}</strong></div>
-                  <div><span>SOP 章节</span><strong>{diagnosis.data_quality?.sop_sections ?? 0}</strong></div>
-                  <div><span>维修记录</span><strong>{diagnosis.data_quality?.maintenance_records ?? 0}</strong></div>
-                </div>
-                {(diagnosis.data_quality?.warnings.length ?? 0) > 0 && (
-                  <ul className="warning-list">
-                    {diagnosis.data_quality?.warnings.map((item) => <li key={item}>{item}</li>)}
-                  </ul>
-                )}
-              </Section>
-
-              <Section icon={<Activity size={19} />} title="事件时间线">
-                <div className="timeline">
-                  {diagnosis.timeline.map((item, index) => (
-                    <div className="timeline-row" key={`${item.timestamp}-${index}`}>
-                      <time>{formatTime(item.timestamp)}</time>
-                      <span className={`severity severity-${item.severity}`}>{item.severity}</span>
-                      <div>
-                        <strong>{item.title}</strong>
-                        <p>{item.detail}</p>
-                        {renderEvidenceButtons(item.evidence_ids)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Section>
-
-              <Section icon={<Wrench size={19} />} title="根因与伴随因素">
-                <div className="candidate-list">
-                  {diagnosis.root_cause_candidates.map(renderCandidate)}
-                </div>
-              </Section>
-
-              {diagnosis.downstream_effects.length > 0 && (
-                <Section icon={<AlertTriangle size={19} />} title="下游影响与质量风险" wide>
-                  <div className="effect-list">
-                    {diagnosis.downstream_effects.map((item) => (
-                      <div key={item.candidate_id}>
-                        <div>
-                          <code>{item.candidate_id}</code>
-                          <strong>{item.title_zh ?? item.title}</strong>
-                        </div>
-                        {renderEvidenceButtons(item.evidence_ids)}
-                      </div>
-                    ))}
-                  </div>
-                </Section>
-              )}
-
-              <Section icon={<FileText size={19} />} title="原始证据" wide>
-                <div className="evidence-list">
-                  {diagnosis.evidence.map((item) => (
-                    <EvidenceItem
-                      key={item.id}
-                      evidence={item}
-                      open={openEvidence.has(item.id)}
-                      focused={focusedEvidence === item.id}
-                      onToggle={() => setOpenEvidence((current) => {
-                        const next = new Set(current);
-                        if (next.has(item.id)) next.delete(item.id);
-                        else next.add(item.id);
-                        return next;
-                      })}
-                    />
-                  ))}
-                </div>
-              </Section>
-
-              <Section icon={<ShieldCheck size={19} />} title="角色化处置动作">
-                <div className="action-list">
-                  {diagnosis.recommended_actions.map((item) => (
-                    <article key={item.action_id}>
-                      <div>
-                        <span>{ACTION_LABEL[item.type] ?? item.type}</span>
-                        <code>{item.action_id}</code>
-                        <strong>{OWNER_LABEL[item.role ?? ""] ?? item.role ?? "待分配"}</strong>
-                      </div>
-                      <h4>{item.title}</h4>
-                      <p>{item.detail}</p>
-                    </article>
-                  ))}
-                </div>
-              </Section>
-
-              <Section icon={<FileText size={19} />} title="维修工单草案">
-                <div className="work-order">
-                  <div><strong>{diagnosis.work_order_draft.title}</strong><span>{diagnosis.work_order_draft.priority}</span></div>
-                  <p>责任角色：{OWNER_LABEL[diagnosis.work_order_draft.assignee_role] ?? diagnosis.work_order_draft.assignee_role}</p>
-                  <ol>{diagnosis.work_order_draft.tasks.map((item, index) => <li key={index}>{item}</li>)}</ol>
-                  <ul className="safety-list">{diagnosis.work_order_draft.safety_notes.map((item) => <li key={item}>{item}</li>)}</ul>
-                </div>
-              </Section>
-
-              {diagnosis.value_estimates.length > 0 && (
-                <Section icon={<BarChart3 size={19} />} title="试点价值测算" wide>
-                  <div className="value-grid">
-                    {diagnosis.value_estimates.map((item) => (
-                      <article key={item.metric}>
-                        <h4>{item.metric}</h4>
-                        <dl>
-                          <dt>基线</dt><dd>{item.baseline}</dd>
-                          <dt>测算</dt><dd>{item.projected}</dd>
-                          <dt>假设</dt><dd>{item.assumption}</dd>
-                        </dl>
-                      </article>
-                    ))}
-                  </div>
-                </Section>
-              )}
+              </section>
             </div>
 
-            <section className="review-band">
-              <div><h3>复盘摘要</h3><p>{diagnosis.postmortem_summary}</p></div>
-              <div><h3>使用边界</h3><ul>{diagnosis.limitations.map((item) => <li key={item}>{item}</li>)}</ul></div>
-            </section>
-          </>
+            {/* Bottom Row: 3 Columns */}
+            <div className="dashboard-grid-columns">
+              {/* Column 1: Causal Evidence Map + Timeline + Raw Evidence */}
+              <div className="dashboard-column">
+                <section className="evidence-map-card section-block">
+                  <header className="section-header">
+                    <FileSearch size={16} />
+                    <h3>诊断因果证据网络图 (Causal Evidence Map)</h3>
+                  </header>
+                  <div className="evidence-map-body">
+                    <div className="evidence-map-workspace">
+                      <div className="map-column">
+                        <span className="column-title">根因 (Candidates)</span>
+                        <div className="map-nodes">
+                          {diagnosis.root_cause_candidates.slice(0, 2).map((rc) => (
+                            <div key={rc.candidate_id} className={`map-node candidate-node priority-${rc.priority}`}>
+                              <div className="node-header">
+                                <code>{rc.candidate_id}</code>
+                                <strong>{rc.title_zh || rc.title}</strong>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="map-connector-column">
+                        <div className="connector-path"></div>
+                      </div>
+
+                      <div className="map-column">
+                        <span className="column-title">关联证据 (Evidence)</span>
+                        <div className="map-nodes">
+                          {diagnosis.evidence.slice(0, 4).map((ev) => {
+                            const isAlarm = ev.source.includes("alarm");
+                            const isSensor = ev.source.includes("sensor");
+                            const typeClass = isAlarm ? "alarm" : isSensor ? "sensor" : "record";
+                            return (
+                              <button
+                                key={ev.id}
+                                className={`map-node evidence-node type-${typeClass}`}
+                                onClick={() => focusEvidence(ev.id)}
+                                title="点击定位到下方原始数据"
+                              >
+                                <code>{ev.id}</code>
+                                <span>{ev.summary}</span>
+                              </button>
+                            );
+                          })}
+                          {diagnosis.evidence.length > 4 && (
+                            <div className="map-nodes-more">
+                              + 还有 {diagnosis.evidence.length - 4} 项关联
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="map-connector-column">
+                        <div className="connector-path"></div>
+                      </div>
+
+                      <div className="map-column">
+                        <span className="column-title">数据源 (Sources)</span>
+                        <div className="map-nodes">
+                          {Array.from(new Set(diagnosis.evidence.map((e) => e.source))).slice(0, 3).map((source) => (
+                            <div key={source} className="map-node source-node">
+                              <FileText size={12} />
+                              <span>{source}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <Section icon={<Activity size={16} />} title="事件时间线" scrollable>
+                  <div className="timeline">
+                    {diagnosis.timeline.map((item, index) => (
+                      <div className="timeline-row" key={`${item.timestamp}-${index}`}>
+                        <time>{formatTime(item.timestamp)}</time>
+                        <span className={`severity severity-${item.severity}`}>{item.severity}</span>
+                        <div>
+                          <strong>{item.title}</strong>
+                          <p>{item.detail}</p>
+                          {renderEvidenceButtons(item.evidence_ids)}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Section>
+
+                <Section icon={<FileText size={16} />} title="原始证据" scrollable>
+                  <div className="evidence-list">
+                    {diagnosis.evidence.map((item) => (
+                      <EvidenceItem
+                        key={item.id}
+                        evidence={item}
+                        open={openEvidence.has(item.id)}
+                        focused={focusedEvidence === item.id}
+                        onToggle={() => setOpenEvidence((current) => {
+                          const next = new Set(current);
+                          if (next.has(item.id)) next.delete(item.id);
+                          else next.add(item.id);
+                          return next;
+                        })}
+                      />
+                    ))}
+                  </div>
+                </Section>
+              </div>
+
+              {/* Column 2: Data Quality + Alerts + Root Cause Candidates */}
+              <div className="dashboard-column">
+                {diagnosis.primary_root_cause && (
+                  <div className="primary-finding-compact">
+                    <div>
+                      <span>主根因</span>
+                      <h4>{diagnosis.primary_root_cause.title_zh ?? diagnosis.primary_root_cause.title}</h4>
+                      <p>{diagnosis.primary_root_cause.why_ranked}</p>
+                    </div>
+                    <strong>{percentage(diagnosis.primary_root_cause.confidence)}</strong>
+                  </div>
+                )}
+
+                {(diagnosis.missing_evidence.length > 0 || diagnosis.conflicting_evidence.length > 0) && (
+                  <section className="evidence-alerts" style={{ flex: "0 0 auto", margin: 0, display: "flex", flexDirection: "column", gap: "6px" }}>
+                    {diagnosis.missing_evidence.length > 0 && (
+                      <div style={{ padding: "8px 12px", background: "#fef3c7", borderLeft: "3px solid #d97706", borderRadius: "6px", display: "flex", gap: "8px", alignItems: "center", fontSize: "11px" }}>
+                        <FileSearch size={14} style={{ color: "#d97706" }} />
+                        <span><strong>缺失：</strong>{diagnosis.missing_evidence.map(translateEvidenceIssue).join("；")}</span>
+                      </div>
+                    )}
+                    {diagnosis.conflicting_evidence.length > 0 && (
+                      <div style={{ padding: "8px 12px", background: "#fee2e2", borderLeft: "3px solid #dc2626", borderRadius: "6px", display: "flex", gap: "8px", alignItems: "center", fontSize: "11px" }}>
+                        <AlertTriangle size={14} style={{ color: "#dc2626" }} />
+                        <span><strong>冲突：</strong>{diagnosis.conflicting_evidence.map(translateEvidenceIssue).join("；")}</span>
+                      </div>
+                    )}
+                  </section>
+                )}
+
+                <section className="data-quality-card section-block">
+                  <header className="section-header">
+                    <BarChart3 size={16} />
+                    <h3>数据监测质量 (Data Quality)</h3>
+                  </header>
+                  <div className="section-body">
+                    <div className="quality-metrics">
+                      <div><span>传感器行</span><strong>{diagnosis.data_quality?.sensor_rows ?? 0}</strong></div>
+                      <div><span>报警事件</span><strong>{diagnosis.data_quality?.alarm_events ?? 0}</strong></div>
+                      <div><span>SOP 章节</span><strong>{diagnosis.data_quality?.sop_sections ?? 0}</strong></div>
+                      <div><span>维修记录</span><strong>{diagnosis.data_quality?.maintenance_records ?? 0}</strong></div>
+                    </div>
+                  </div>
+                </section>
+
+                <Section icon={<Wrench size={16} />} title="根因与伴随因素" scrollable>
+                  <div className="candidate-list">
+                    {diagnosis.root_cause_candidates.map(renderCandidate)}
+                  </div>
+                  {diagnosis.downstream_effects.length > 0 && (
+                    <div style={{ marginTop: "14px", borderTop: "1px dashed #cbd5e1", paddingTop: "12px" }}>
+                      <h4 style={{ fontSize: "12px", margin: "0 0 8px", display: "flex", alignItems: "center", gap: "6px", color: "#475569" }}>
+                        <AlertTriangle size={14} />下游影响与质量风险
+                      </h4>
+                      <div className="effect-list">
+                        {diagnosis.downstream_effects.map((item) => (
+                          <div key={item.candidate_id}>
+                            <div>
+                              <code>{item.candidate_id}</code>
+                              <strong>{item.title_zh ?? item.title}</strong>
+                            </div>
+                            {renderEvidenceButtons(item.evidence_ids)}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </Section>
+              </div>
+
+              {/* Column 3: Agent decisions + Recommended Actions / Work Order / Estimates / Review */}
+              <div className="dashboard-column">
+                <Section icon={<CheckCircle2 size={16} />} title="Agent 决策轨迹" scrollable className="agent-terminal-card">
+                  <div className="terminal-header">
+                    <span className="terminal-dot red"></span>
+                    <span className="terminal-dot yellow"></span>
+                    <span className="terminal-dot green"></span>
+                    <span className="terminal-title">agent_decision_trace.log</span>
+                    <span className="terminal-status"><span className="pulse-dot"></span>ACTIVE</span>
+                  </div>
+                  <ol className="decision-list terminal-style">
+                    {diagnosis.agent_decisions.map((item, index) => (
+                      <li key={`${item.state}-${index}`}>
+                        <span className="terminal-prompt">&gt;</span>
+                        <code>{item.state}</code>
+                        <strong className={`decision-${item.decision}`}>{DECISION_LABEL[item.decision] ?? item.decision}</strong>
+                        <span className="terminal-reason">{item.reason}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </Section>
+
+                <Section icon={<ShieldCheck size={16} />} title="处置方案与工单" scrollable className="actions-workorder-card">
+                  <div className="actions-work-order-scroll-container">
+                    <div className="action-list">
+                      {diagnosis.recommended_actions.map((item) => (
+                        <article key={item.action_id} style={{ margin: 0 }}>
+                          <div>
+                            <span>{ACTION_LABEL[item.type] ?? item.type}</span>
+                            <code>{item.action_id}</code>
+                            <strong>{OWNER_LABEL[item.role ?? ""] ?? item.role ?? "待分配"}</strong>
+                          </div>
+                          <h4>{item.title}</h4>
+                          <p>{item.detail}</p>
+                        </article>
+                      ))}
+                    </div>
+
+                    <div className="work-order" style={{ margin: 0 }}>
+                      <div><strong>{diagnosis.work_order_draft.title}</strong><span>{diagnosis.work_order_draft.priority}</span></div>
+                      <p>责任角色：{OWNER_LABEL[diagnosis.work_order_draft.assignee_role] ?? diagnosis.work_order_draft.assignee_role}</p>
+                      <ol>{diagnosis.work_order_draft.tasks.map((item, index) => <li key={index}>{item}</li>)}</ol>
+                      <ul className="safety-list">{diagnosis.work_order_draft.safety_notes.map((item) => <li key={item}>{item}</li>)}</ul>
+                    </div>
+
+                    {diagnosis.value_estimates.length > 0 && (
+                      <div className="value-section" style={{ borderTop: "1px dashed #cbd5e1", paddingTop: "12px" }}>
+                        <h4 style={{ fontSize: "12px", margin: "0 0 8px", color: "#475569" }}>试点价值测算</h4>
+                        <div className="value-grid">
+                          {diagnosis.value_estimates.map((item) => (
+                            <article key={item.metric} style={{ margin: 0 }}>
+                              <h4>{item.metric}</h4>
+                              <dl>
+                                <dt>基线</dt><dd>{item.baseline}</dd>
+                                <dt>测算</dt><dd>{item.projected}</dd>
+                                <dt>假设</dt><dd>{item.assumption}</dd>
+                              </dl>
+                            </article>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="review-band" style={{ margin: 0, gridTemplateColumns: "1fr", gap: "12px", background: "#263d3d", padding: "12px", borderRadius: "8px" }}>
+                      <div><h3 style={{ fontSize: "12px", color: "#ffffff", margin: "0 0 4px" }}>复盘摘要</h3><p style={{ margin: 0, fontSize: "11px", color: "#c0d0cd" }}>{diagnosis.postmortem_summary}</p></div>
+                      <div><h3 style={{ fontSize: "12px", color: "#ffffff", margin: "0 0 4px" }}>使用边界</h3><ul style={{ margin: 0, paddingLeft: "14px", fontSize: "11px", color: "#c0d0cd" }}>{diagnosis.limitations.map((item) => <li key={item}>{item}</li>)}</ul></div>
+                    </div>
+                  </div>
+                </Section>
+              </div>
+            </div>
+          </div>
         )}
       </section>
     </main>

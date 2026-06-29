@@ -8,14 +8,14 @@ const indexPath = join(distDir, "index.html");
 
 const requiredLabels = [
   "ForgePulse",
-  "Agent 决策轨迹",
-  "根因与伴随因素",
-  "原始证据",
-  "处置方案与工单",
-  "诊断因果证据网络图",
-  "证据不足",
-  "证据冲突",
-  "导出报告",
+  "Agent \u51b3\u7b56\u8f68\u8ff9",
+  "\u6839\u56e0\u4e0e\u4f34\u968f\u56e0\u7d20",
+  "\u539f\u59cb\u8bc1\u636e",
+  "\u5904\u7f6e\u65b9\u6848\u4e0e\u5de5\u5355",
+  "\u8bca\u65ad\u56e0\u679c\u8bc1\u636e\u7f51\u7edc\u56fe",
+  "\u8bc1\u636e\u4e0d\u8db3",
+  "\u8bc1\u636e\u51b2\u7a81",
+  "\u5bfc\u51fa\u62a5\u544a",
 ];
 
 function fail(message) {

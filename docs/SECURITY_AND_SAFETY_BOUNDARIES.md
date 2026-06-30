@@ -2,6 +2,28 @@
 
 ForgePulse 的可信度取决于边界清楚。它是诊断辅助系统，不是自动控制系统。
 
+## Runtime Security (Implemented)
+
+The API enforces authentication, rate limiting, and audit logging
+(`app/backend/forgepulse_api/security.py`):
+
+- **API key auth**: clients send `X-API-Key: <key>`. Keys are configured via
+  `FORGEPULSE_API_KEYS` as comma-separated `<key>:<role>` entries where role is
+  `viewer|engineer|admin`. Unknown or missing key → `401`.
+- **RBAC**: `require_role(...)` dependency gates write-class endpoints by role.
+  All current endpoints are read-only (`viewer` sufficient); the hook exists for
+  future POST endpoints.
+- **Rate limiting**: in-memory sliding-window token bucket, `FORGEPULSE_RATE_LIMIT`
+  requests per key per minute (default 60). Exceeded → `429`. Open mode
+  (no keys configured) rate-limits by client IP instead.
+- **Audit log**: every request is appended as a JSON line to
+  `FORGEPULSE_AUDIT_LOG` (default `logs/audit.jsonl`) with timestamp, masked
+  key id, role, method, path, status, latency, and client IP.
+
+**Open mode**: when `FORGEPULSE_API_KEYS` is unset, the API runs without auth for
+local development and logs a prominent warning. **Open mode must NOT be used in
+production.** Set at least one API key before any external exposure.
+
 ## Non-negotiable Boundaries
 
 ForgePulse must not:

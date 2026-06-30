@@ -28,6 +28,7 @@ from forgepulse_api.services.case_loader import (
     load_maintenance_records,
     load_sop,
 )
+from forgepulse_api.services.model_provider import get_model_provider
 from forgepulse_api.services.alarm_parser import parse_alarms
 from forgepulse_api.services.sensor_analyzer import analyze_sensor_data
 from forgepulse_api.services.retriever import retrieve_relevant
@@ -1054,7 +1055,6 @@ def _execute_diagnosis(
     limitations = [
         "This diagnosis is generated from synthetic demo data.",
         "Real equipment actions require factory safety procedures and engineer confirmation.",
-        "Deterministic analysis only – no LLM reasoning applied.",
         "Configured value estimates are scenario calculations, not validated production results.",
     ]
 
@@ -1083,21 +1083,102 @@ def _execute_diagnosis(
     )
 
 
+def _sanitize_reasoning(diagnosis: Diagnosis, review) -> None:
+    """Drop any evidence/candidate references that do not belong to this case.
+
+    Guarantees the engine invariants regardless of which provider produced the
+    review. Mutates ``review`` in place.
+    """
+    allowed_evidence = {item.id for item in diagnosis.evidence}
+    allowed_candidates = {
+        item.candidate_id
+        for item in (
+            list(diagnosis.root_cause_candidates)
+            + list(diagnosis.contributing_factors)
+            + list(diagnosis.downstream_effects)
+        )
+    }
+    clean_evidence = [i for i in review.referenced_evidence_ids if i in allowed_evidence]
+    dropped_evidence = sorted(set(review.referenced_evidence_ids) - allowed_evidence)
+    clean_notes = [n for n in review.candidate_notes if n.candidate_id in allowed_candidates]
+    dropped_notes = len(review.candidate_notes) - len(clean_notes)
+    review.referenced_evidence_ids = sorted(set(clean_evidence))
+    review.candidate_notes = clean_notes
+    notes = []
+    if dropped_evidence:
+        notes.append("dropped unknown evidence ids: " + ", ".join(dropped_evidence))
+    if dropped_notes:
+        notes.append(f"dropped {dropped_notes} candidate note(s) with unknown candidate_id")
+    if notes:
+        review.warning = (review.warning + "; " if review.warning else "") + "; ".join(notes)
+
+
+def _apply_reasoning(
+    diagnosis: Diagnosis,
+    reasoning: str,
+) -> None:
+    """Attach the advisory LLM review layer (if enabled) and finalize limitations.
+
+    The deterministic diagnosis is never modified structurally. When an LLM
+    provider is configured and reasoning is not explicitly off, an advisory
+    review is attached via ``agent_reasoning`` and an audit decision is
+    appended to the agent decision trace. Mutations target the diagnosis
+    model's own attributes directly (Pydantic v2 rebuilds list fields on
+    validation, so the caller's list is not shared with the model).
+    """
+    if reasoning == "off":
+        diagnosis.limitations.append("Deterministic analysis only – no LLM reasoning applied.")
+        return
+
+    review = get_model_provider().reason(diagnosis)
+    if review is None:
+        # Offline provider: no LLM reasoning available.
+        diagnosis.limitations.append("Deterministic analysis only – no LLM reasoning applied.")
+        return
+
+    diagnosis.agent_reasoning = review
+    # Defense in depth: sanitize the review regardless of which provider
+    # produced it, so the engine guarantees the evidence/candidate invariants
+    # even if a custom provider returns ids that do not belong to this case.
+    _sanitize_reasoning(diagnosis, review)
+    if review.warning:
+        decision = "continue_with_caution"
+        reason = review.warning
+    else:
+        decision = "confirmed"
+        reason = (
+            review.review_summary
+            or "LLM review completed; advisory notes attached without changing structured diagnosis."
+        )
+    diagnosis.agent_decisions.append(AgentDecision(state="llm_review", decision=decision, reason=reason))
+    diagnosis.limitations.append(
+        "LLM reasoning is advisory; structured diagnosis is deterministic and evidence-validated."
+    )
+
+
 class DiagnosisAgent:
     """Bounded, auditable state machine for industrial diagnosis."""
 
-    def __init__(self, case_id: str, case_data: dict | None = None):
+    def __init__(
+        self,
+        case_id: str,
+        case_data: dict | None = None,
+        reasoning: str = "auto",
+    ):
         self.case_id = case_id
         self.case_data = case_data
+        self.reasoning = reasoning
         self.decisions: list[AgentDecision] = []
 
     def run(self) -> Diagnosis:
-        return _execute_diagnosis(self.case_id, self.case_data, self.decisions)
+        diagnosis = _execute_diagnosis(self.case_id, self.case_data, self.decisions)
+        _apply_reasoning(diagnosis, self.reasoning)
+        return diagnosis
 
 
-def build_diagnosis(case_id: str) -> Diagnosis:
+def build_diagnosis(case_id: str, reasoning: str = "auto") -> Diagnosis:
     """Build a diagnosis from the registered case directory."""
-    return DiagnosisAgent(case_id).run()
+    return DiagnosisAgent(case_id, reasoning=reasoning).run()
 
 
 def build_diagnosis_from_data(

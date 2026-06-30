@@ -17,7 +17,9 @@
       "title": "fan_frequency_hz threshold violation",
       "detail": "fan_frequency_hz fell below threshold at 41.5.",
       "severity": "major",
-      "evidence_ids": []
+      "evidence_ids": [
+        "EV-008"
+      ]
     },
     {
       "timestamp": "2026-07-15T14:10:30+08:00",
@@ -42,14 +44,20 @@
       "title": "dryer_zone_2_temp_c threshold violation",
       "detail": "dryer_zone_2_temp_c exceeded threshold at 96.0.",
       "severity": "major",
-      "evidence_ids": []
+      "evidence_ids": [
+        "EV-007",
+        "EV-009"
+      ]
     },
     {
       "timestamp": "2026-07-15T14:12:00+08:00",
       "title": "thickness_um threshold violation",
       "detail": "thickness_um exceeded threshold at 104.2.",
       "severity": "major",
-      "evidence_ids": []
+      "evidence_ids": [
+        "EV-007",
+        "EV-009"
+      ]
     },
     {
       "timestamp": "2026-07-15T14:20:10+08:00",
@@ -440,8 +448,8 @@
   "limitations": [
     "This diagnosis is generated from synthetic demo data.",
     "Real equipment actions require factory safety procedures and engineer confirmation.",
-    "Deterministic analysis only – no LLM reasoning applied.",
-    "Configured value estimates are scenario calculations, not validated production results."
+    "Configured value estimates are scenario calculations, not validated production results.",
+    "Deterministic analysis only – no LLM reasoning applied."
   ],
   "diagnostic_process": [
     {
@@ -758,5 +766,6 @@
       "assumption": "Illustrative scenario only. Currency and plant cost must be configured and validated during a pilot.",
       "configured": true
     }
-  ]
+  ],
+  "agent_reasoning": null
 }

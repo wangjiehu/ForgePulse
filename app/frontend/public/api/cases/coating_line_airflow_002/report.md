@@ -184,5 +184,5 @@ The incident likely originated from Fan inverter airflow frequency instability. 
 ## Limitations
 - This diagnosis is generated from synthetic demo data.
 - Real equipment actions require factory safety procedures and engineer confirmation.
-- Deterministic analysis only – no LLM reasoning applied.
 - Configured value estimates are scenario calculations, not validated production results.
+- Deterministic analysis only – no LLM reasoning applied.

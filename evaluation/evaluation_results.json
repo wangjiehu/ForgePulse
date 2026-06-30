@@ -1,6 +1,6 @@
 {
-  "overall_score": 71,
-  "overall_max": 71,
+  "overall_score": 76,
+  "overall_max": 76,
   "overall_pct": 100.0,
   "all_passed": true,
   "case_results": [
@@ -68,6 +68,11 @@
           "detail": "two runs must produce identical JSON"
         },
         {
+          "check": "offline_no_agent_reasoning",
+          "passed": true,
+          "detail": "offline evaluation must not attach LLM reasoning"
+        },
+        {
           "check": "no_golden_label_dependency",
           "passed": true,
           "detail": "removing expected_outputs must not change the diagnosis"
@@ -83,8 +88,8 @@
           "detail": "violations=[]"
         }
       ],
-      "score": 15,
-      "max_score": 15
+      "score": 16,
+      "max_score": 16
     },
     {
       "case_id": "coating_line_conflicting_evidence_005",
@@ -145,6 +150,11 @@
           "detail": "two runs must produce identical JSON"
         },
         {
+          "check": "offline_no_agent_reasoning",
+          "passed": true,
+          "detail": "offline evaluation must not attach LLM reasoning"
+        },
+        {
           "check": "no_golden_label_dependency",
           "passed": true,
           "detail": "removing expected_outputs must not change the diagnosis"
@@ -155,8 +165,8 @@
           "detail": "violations=[]"
         }
       ],
-      "score": 13,
-      "max_score": 13
+      "score": 14,
+      "max_score": 14
     },
     {
       "case_id": "coating_line_drive_resistance_003",
@@ -222,6 +232,11 @@
           "detail": "two runs must produce identical JSON"
         },
         {
+          "check": "offline_no_agent_reasoning",
+          "passed": true,
+          "detail": "offline evaluation must not attach LLM reasoning"
+        },
+        {
           "check": "no_golden_label_dependency",
           "passed": true,
           "detail": "removing expected_outputs must not change the diagnosis"
@@ -237,8 +252,8 @@
           "detail": "violations=[]"
         }
       ],
-      "score": 15,
-      "max_score": 15
+      "score": 16,
+      "max_score": 16
     },
     {
       "case_id": "coating_line_dryer_tension_001",
@@ -304,6 +319,11 @@
           "detail": "two runs must produce identical JSON"
         },
         {
+          "check": "offline_no_agent_reasoning",
+          "passed": true,
+          "detail": "offline evaluation must not attach LLM reasoning"
+        },
+        {
           "check": "no_golden_label_dependency",
           "passed": true,
           "detail": "removing expected_outputs must not change the diagnosis"
@@ -319,8 +339,8 @@
           "detail": "violations=[]"
         }
       ],
-      "score": 15,
-      "max_score": 15
+      "score": 16,
+      "max_score": 16
     },
     {
       "case_id": "coating_line_incomplete_evidence_004",
@@ -381,6 +401,11 @@
           "detail": "two runs must produce identical JSON"
         },
         {
+          "check": "offline_no_agent_reasoning",
+          "passed": true,
+          "detail": "offline evaluation must not attach LLM reasoning"
+        },
+        {
           "check": "no_golden_label_dependency",
           "passed": true,
           "detail": "removing expected_outputs must not change the diagnosis"
@@ -391,8 +416,8 @@
           "detail": "violations=[]"
         }
       ],
-      "score": 13,
-      "max_score": 13
+      "score": 14,
+      "max_score": 14
     }
   ]
 }

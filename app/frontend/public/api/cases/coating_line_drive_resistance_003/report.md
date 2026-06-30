@@ -187,5 +187,5 @@ The incident likely originated from Drive current resistance from roller surface
 ## Limitations
 - This diagnosis is generated from synthetic demo data.
 - Real equipment actions require factory safety procedures and engineer confirmation.
-- Deterministic analysis only – no LLM reasoning applied.
 - Configured value estimates are scenario calculations, not validated production results.
+- Deterministic analysis only – no LLM reasoning applied.

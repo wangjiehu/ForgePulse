@@ -25,7 +25,7 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
     
     # 1. Export /health.json
-    health_data = {"status": "ok", "version": "0.2.0"}
+    health_data = {"status": "ok", "version": "0.3.0", "provider_mode": "offline", "open_mode": True}
     with open(output_dir / "health.json", "w", encoding="utf-8") as f:
         json.dump(health_data, f)
         

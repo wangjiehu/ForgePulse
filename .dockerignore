@@ -1,0 +1,38 @@
+# Version control
+.git/
+.gitignore
+
+# Node
+app/frontend/node_modules/
+app/frontend/dist/
+app/frontend/.vite/
+
+# Python
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+app/backend/.venv/
+app/backend/venv/
+
+# Local env / secrets
+.env
+.env.*
+!**/.env.example
+
+# Logs / runtime artifacts
+logs/
+*.log
+
+# Generated reports
+reports/generated/
+
+# IDE / tooling
+.atomcode/
+.claude/
+.runtime/
+.vscode/
+.idea/
+
+# Deliverables / docs artifacts not needed in the image
+deliverables/
+docs/assets/

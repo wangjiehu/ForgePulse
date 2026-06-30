@@ -17,7 +17,9 @@
       "title": "web_tension_n threshold violation",
       "detail": "web_tension_n exceeded threshold at 139.2.",
       "severity": "major",
-      "evidence_ids": []
+      "evidence_ids": [
+        "EV-007"
+      ]
     },
     {
       "timestamp": "2026-06-10T10:18:10+08:00",
@@ -33,14 +35,18 @@
       "title": "dryer_zone_2_temp_c threshold violation",
       "detail": "dryer_zone_2_temp_c exceeded threshold at 97.1.",
       "severity": "major",
-      "evidence_ids": []
+      "evidence_ids": [
+        "EV-006"
+      ]
     },
     {
       "timestamp": "2026-06-10T10:22:00+08:00",
       "title": "thickness_um threshold violation",
       "detail": "thickness_um exceeded threshold at 106.3.",
       "severity": "major",
-      "evidence_ids": []
+      "evidence_ids": [
+        "EV-008"
+      ]
     },
     {
       "timestamp": "2026-06-10T10:22:40+08:00",
@@ -424,8 +430,8 @@
   "limitations": [
     "This diagnosis is generated from synthetic demo data.",
     "Real equipment actions require factory safety procedures and engineer confirmation.",
-    "Deterministic analysis only – no LLM reasoning applied.",
-    "Configured value estimates are scenario calculations, not validated production results."
+    "Configured value estimates are scenario calculations, not validated production results.",
+    "Deterministic analysis only – no LLM reasoning applied."
   ],
   "diagnostic_process": [
     {
@@ -697,5 +703,6 @@
       "assumption": "Illustrative scenario only. Currency and plant cost must be configured and validated during a pilot.",
       "configured": true
     }
-  ]
+  ],
+  "agent_reasoning": null
 }

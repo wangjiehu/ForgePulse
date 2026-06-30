@@ -198,6 +198,14 @@ def evaluate_case(golden: dict) -> dict:
     second_dump = build_diagnosis(case_id).model_dump(mode="json")
     add_check(result, "deterministic_output", first_dump == second_dump, "two runs must produce identical JSON")
 
+    # Offline evaluation must not attach any LLM reasoning (keeps determinism).
+    add_check(
+        result,
+        "offline_no_agent_reasoning",
+        diagnosis.agent_reasoning is None,
+        "offline evaluation must not attach LLM reasoning",
+    )
+
     manifest = load_case_manifest(case_id)
     sensor_rows = load_sensor_readings(case_id)
     alarm_rows = load_alarms(case_id)

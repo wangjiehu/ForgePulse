@@ -22,3 +22,4 @@ dist/
 # Generated artifacts
 reports/generated/
 *.log
+logs/

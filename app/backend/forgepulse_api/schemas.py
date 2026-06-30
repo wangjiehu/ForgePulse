@@ -114,6 +114,33 @@ class AgentDecision(BaseModel):
     reason: str
 
 
+class CandidateNote(BaseModel):
+    """LLM review note for a single root-cause candidate (advisory only)."""
+
+    candidate_id: str
+    rationale_refined: str = ""
+    why_ranked_refined: str = ""
+
+
+class AgentReasoning(BaseModel):
+    """Advisory LLM review layer.
+
+    Produced by the model provider after the deterministic engine has finalized
+    the structured diagnosis. It never overrides structured fields (status,
+    candidates, confidence, scores, actions); it only contributes natural
+    language review, uncertainty flags, and safety reaffirmation. Every
+    referenced evidence id must belong to the diagnosis evidence set.
+    """
+
+    mode: str
+    review_summary: str
+    candidate_notes: list[CandidateNote] = Field(default_factory=list)
+    uncertainties: list[str] = Field(default_factory=list)
+    safety_reaffirmation: str = ""
+    referenced_evidence_ids: list[str] = Field(default_factory=list)
+    warning: str | None = None
+
+
 class Diagnosis(BaseModel):
     case_id: str
     diagnosis_status: DiagnosisStatus = "provisional"
@@ -136,3 +163,4 @@ class Diagnosis(BaseModel):
     evidence_links: list[EvidenceLink] = Field(default_factory=list)
     data_quality: DataQualityReport | None = None
     value_estimates: list[ValueEstimate] = Field(default_factory=list)
+    agent_reasoning: AgentReasoning | None = None

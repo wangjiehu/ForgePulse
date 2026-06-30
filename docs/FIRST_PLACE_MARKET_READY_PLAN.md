@@ -2,6 +2,20 @@
 
 ForgePulse 当前是一个可运行 MVP 雏形，不是第一名级别作品。要达到“比赛第一梯队，并具备市场化试点价值”，必须把它从单案例 demo 提升为 **工业诊断 Agent 产品原型**。
 
+> **Implementation status (updated 2026-06).** 以下能力已落地，不再是规划：
+> - **真 Agent 推理层**：诊断循环现接入 OpenAI 兼容 LLM 作为咨询性复核层
+>   （`model_provider.reason` → `AgentReasoning`），双层架构保证确定性结论不被覆盖，
+>   证据/候选 ID 经白名单 + `_sanitize_reasoning` 双重校验，失败回退确定性原文。
+>   见 `docs/AGENT_WORKFLOW.md`。`scripts/verify_agent.py` 可端到端验证真 LLM 通路。
+> - **运行时安全**：API key 鉴权 + RBAC + 滑动窗口限流 + 结构化审计日志
+>   （`security.py`）。见 `docs/SECURITY_AND_SAFETY_BOUNDARIES.md`。
+> - **前端健壮性**：组件拆分、空状态、错误重试、错误边界、骨架屏、规则表驱动的产线
+>   状态、AI 复核 UI，并补齐 vitest 前端测试。
+> - **测试与评估**：后端 92 测试 + 评估 76/76（含 offline 不附加 LLM 的新检查）。
+>
+> 仍未做（按用户决策暂缓）：Docker/云部署化、工厂 SCADA/OPC-UA 真实连接器、
+> Ascend NPU 本地推理、性能压测。
+
 ## 1. Winning Thesis
 
 比赛里普通项目会做：

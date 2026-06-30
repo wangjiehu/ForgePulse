@@ -114,5 +114,5 @@ The available evidence does not support a reliable root-cause conclusion. Collec
 ## Limitations
 - This diagnosis is generated from synthetic demo data.
 - Real equipment actions require factory safety procedures and engineer confirmation.
-- Deterministic analysis only – no LLM reasoning applied.
 - Configured value estimates are scenario calculations, not validated production results.
+- Deterministic analysis only – no LLM reasoning applied.

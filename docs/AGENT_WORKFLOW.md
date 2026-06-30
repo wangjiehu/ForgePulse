@@ -4,6 +4,24 @@
 
 ForgePulse 的 Agent 目标不是聊天，而是完成设备异常诊断工作流。
 
+## Architecture: Two-Layer Diagnosis
+
+ForgePulse 采用**双层架构**，这是其可信度的根基：
+
+1. **确定性引擎（事实来源）** —— `diagnosis.py:_execute_diagnosis` 是纯确定性的
+   8 步流水线。它产出所有结构化结论：诊断状态、根因候选、置信度、评分、
+   推荐动作、工单。给定相同输入，输出逐字节相同（评估的 `deterministic_output`
+   检查与反事实敏感性都依赖此性质）。
+
+2. **LLM 复核层（咨询性）** —— 当配置了 OpenAI 兼容 provider 时，
+   `model_provider.py:reason()` 在确定性结论产出后发起一次 LLM 调用，产出
+   `AgentReasoning`：整体复核意见、每候选 rationale 润色、不确定性标记、安全重申。
+   该层**永不覆盖**结构化字段；引用的证据 ID 与候选 ID 经白名单校验并在
+   `diagnosis.py:_sanitize_reasoning` 处二次清洗；任何校验或传输失败都回退确定性原文。
+
+LLM 复核默认关闭（`FORGEPULSE_MODEL_PROVIDER=offline`），通过 `?reasoning=llm`
+或 provider 配置开启。评估脚本始终以 offline 模式运行，确保 76/76 不退化。
+
 ## Workflow
 
 1. Intake

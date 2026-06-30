@@ -17,7 +17,9 @@
       "title": "fan_frequency_hz threshold violation",
       "detail": "fan_frequency_hz fell below threshold at 41.4.",
       "severity": "major",
-      "evidence_ids": []
+      "evidence_ids": [
+        "EV-003"
+      ]
     },
     {
       "timestamp": "2026-09-18T15:21:20+08:00",
@@ -244,8 +246,8 @@
   "limitations": [
     "This diagnosis is generated from synthetic demo data.",
     "Real equipment actions require factory safety procedures and engineer confirmation.",
-    "Deterministic analysis only – no LLM reasoning applied.",
-    "Configured value estimates are scenario calculations, not validated production results."
+    "Configured value estimates are scenario calculations, not validated production results.",
+    "Deterministic analysis only – no LLM reasoning applied."
   ],
   "diagnostic_process": [
     {
@@ -407,5 +409,6 @@
     "invalid_fields": [],
     "completeness_score": 1.0
   },
-  "value_estimates": []
+  "value_estimates": [],
+  "agent_reasoning": null
 }

@@ -1,3 +1,13 @@
+---
+title: ForgePulse
+emoji: 🏭
+colorFrom: indigo
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # ForgePulse
 
 ForgePulse is an industry Agent for battery manufacturing equipment diagnosis and maintenance decision support.
@@ -73,7 +83,7 @@ cd app/backend
 # Install dependencies
 pip install -e ".[dev]"
 
-# Start the API server
+# Start the API server (open mode — local dev only)
 uvicorn forgepulse_api.main:app --reload --port 8000
 
 # Verify
@@ -81,6 +91,45 @@ curl http://localhost:8000/health
 curl http://localhost:8000/cases
 curl http://localhost:8000/cases/coating_line_dryer_tension_001/diagnosis
 ```
+
+#### Authentication & rate limiting (production)
+
+The API runs in **open mode** (no auth) when `FORGEPULSE_API_KEYS` is unset —
+local dev only. For any external exposure, configure API keys:
+
+```bash
+# <key>:<role>, role is viewer|engineer|admin
+export FORGEPULSE_API_KEYS="alice-key:admin,bob-key:viewer"
+export FORGEPULSE_RATE_LIMIT=60   # per key per minute
+
+# Authenticated requests use the X-API-Key header
+curl -H "X-API-Key: bob-key" http://localhost:8000/cases
+```
+
+Every request is audit-logged to `logs/audit.jsonl`. See
+`docs/SECURITY_AND_SAFETY_BOUNDARIES.md`.
+
+#### LLM advisory review (optional)
+
+The diagnosis engine is deterministic by default. To enable the advisory LLM
+review layer (OpenAI-compatible endpoint), set:
+
+```bash
+export FORGEPULSE_MODEL_PROVIDER=openai_compatible
+export FORGEPULSE_MODEL_BASE_URL=http://localhost:8001/v1
+export FORGEPULSE_MODEL_API_KEY=...
+export FORGEPULSE_MODEL_NAME=...
+
+# Then request reasoning (or rely on ?reasoning=auto)
+curl -H "X-API-Key: bob-key" \
+  "http://localhost:8000/cases/coating_line_dryer_tension_001/diagnosis?reasoning=llm"
+
+# Verify the live LLM path end-to-end
+python scripts/verify_agent.py
+```
+
+The LLM only reviews; it never overrides the structured diagnosis. See
+`docs/AGENT_WORKFLOW.md`.
 
 ### Frontend
 
@@ -146,13 +195,16 @@ python scripts/generate_sample_reports.py
 
 | Endpoint | Method | Description |
 |---|---|---|
-| `/health` | GET | Health check |
+| `/health` | GET | Health check (open; returns provider mode, case count, rate limit) |
 | `/cases` | GET | List available cases with metadata |
-| `/cases/{case_id}/diagnosis` | GET | Get structured diagnosis JSON |
+| `/cases/{case_id}/diagnosis` | GET | Get structured diagnosis JSON. `?reasoning=auto\|off\|llm` controls the advisory LLM review layer |
 | `/cases/{case_id}/report` | GET | Export diagnosis as Markdown report |
 | `/cases/{case_id}/validation` | GET | Return case validation errors and warnings |
 | `/cases/{case_id}/narrative` | GET | Optional narrative-only model enhancement |
 | `/fault-modes` | GET | List fault mode definitions |
+
+All endpoints except `/health` require an `X-API-Key` header when
+`FORGEPULSE_API_KEYS` is configured (production). Rate-limited per key.
 
 ## Available Cases
 

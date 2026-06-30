@@ -606,9 +606,9 @@ export default function App() {
               </section>
             </div>
 
-            {/* Bottom Row: 3 Columns */}
+            {/* Bottom Row: 2 Columns */}
             <div className="dashboard-grid-columns">
-              {/* Column 1: Causal Evidence Map + Timeline + Raw Evidence */}
+              {/* Column 1: Causal Evidence Map + Candidates + Timeline + Raw Evidence */}
               <div className="dashboard-column">
                 <section className="evidence-map-card section-block">
                   <header className="section-header">
@@ -681,7 +681,31 @@ export default function App() {
                   </div>
                 </section>
 
-                <Section icon={<Activity size={16} />} title="事件时间线" scrollable>
+                <Section icon={<Wrench size={16} />} title="根因与伴随因素">
+                  <div className="candidate-list">
+                    {diagnosis.root_cause_candidates.map(renderCandidate)}
+                  </div>
+                  {diagnosis.downstream_effects.length > 0 && (
+                    <div style={{ marginTop: "14px", borderTop: "1px dashed #cbd5e1", paddingTop: "12px" }}>
+                      <h4 style={{ fontSize: "12px", margin: "0 0 8px", display: "flex", alignItems: "center", gap: "6px", color: "#475569" }}>
+                        <AlertTriangle size={14} />下游影响与质量风险
+                      </h4>
+                      <div className="effect-list">
+                        {diagnosis.downstream_effects.map((item) => (
+                          <div key={item.candidate_id}>
+                            <div>
+                              <code>{item.candidate_id}</code>
+                              <strong>{item.title_zh ?? item.title}</strong>
+                            </div>
+                            {renderEvidenceButtons(item.evidence_ids)}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </Section>
+
+                <Section icon={<Activity size={16} />} title="事件时间线">
                   <div className="timeline">
                     {diagnosis.timeline.map((item, index) => (
                       <div className="timeline-row" key={`${item.timestamp}-${index}`}>
@@ -697,7 +721,7 @@ export default function App() {
                   </div>
                 </Section>
 
-                <Section icon={<FileText size={16} />} title="原始证据" scrollable>
+                <Section icon={<FileText size={16} />} title="原始证据">
                   <div className="evidence-list">
                     {diagnosis.evidence.map((item) => (
                       <EvidenceItem
@@ -717,7 +741,7 @@ export default function App() {
                 </Section>
               </div>
 
-              {/* Column 2: Data Quality + Alerts + Root Cause Candidates */}
+              {/* Column 2: Primary Cause + Alerts + Data Quality + Agent trace + Actions & Work Order */}
               <div className="dashboard-column">
                 {diagnosis.primary_root_cause && (
                   <div className="primary-finding-compact">
@@ -762,33 +786,6 @@ export default function App() {
                   </div>
                 </section>
 
-                <Section icon={<Wrench size={16} />} title="根因与伴随因素" scrollable>
-                  <div className="candidate-list">
-                    {diagnosis.root_cause_candidates.map(renderCandidate)}
-                  </div>
-                  {diagnosis.downstream_effects.length > 0 && (
-                    <div style={{ marginTop: "14px", borderTop: "1px dashed #cbd5e1", paddingTop: "12px" }}>
-                      <h4 style={{ fontSize: "12px", margin: "0 0 8px", display: "flex", alignItems: "center", gap: "6px", color: "#475569" }}>
-                        <AlertTriangle size={14} />下游影响与质量风险
-                      </h4>
-                      <div className="effect-list">
-                        {diagnosis.downstream_effects.map((item) => (
-                          <div key={item.candidate_id}>
-                            <div>
-                              <code>{item.candidate_id}</code>
-                              <strong>{item.title_zh ?? item.title}</strong>
-                            </div>
-                            {renderEvidenceButtons(item.evidence_ids)}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </Section>
-              </div>
-
-              {/* Column 3: Agent decisions + Recommended Actions / Work Order / Estimates / Review */}
-              <div className="dashboard-column">
                 <Section icon={<CheckCircle2 size={16} />} title="Agent 决策轨迹" scrollable className="agent-terminal-card">
                   <div className="terminal-header">
                     <span className="terminal-dot red"></span>
@@ -809,7 +806,7 @@ export default function App() {
                   </ol>
                 </Section>
 
-                <Section icon={<ShieldCheck size={16} />} title="处置方案与工单" scrollable className="actions-workorder-card">
+                <Section icon={<ShieldCheck size={16} />} title="处置方案与工单" className="actions-workorder-card">
                   <div className="actions-work-order-scroll-container">
                     <div className="action-list">
                       {diagnosis.recommended_actions.map((item) => (
